@@ -1,0 +1,15 @@
+<h1>Create a new course</h1>
+<%= form_for :course, url: courses_path do |f| %>
+  <%= f.label :name %>
+  <br>
+  <%= f.text_field :name %>
+  <br>
+  <%= f.label :category %>
+  <br>
+  <%= check_box_tag :category %>
+  <%= label_tag :category, "Web Development" %>
+  <%= check_box_tag :category %>
+  <%= label_tag :category, "Java" %>
+  <br>
+  <%= f.submit %>
+<% end %>
