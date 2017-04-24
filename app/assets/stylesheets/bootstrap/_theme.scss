@@ -5,7 +5,7 @@
  */
 
 body {
-    margin-top: 100px;
+    margin-top: $nav-height;
     background-color: $body-bg;
 }
 
@@ -19,12 +19,22 @@ p {
 
 /**
  *
+ * Jumbotron
+ *
+ */
+
+.jumbotron {
+    margin-top: $nav-height - 40px;
+}
+
+/**
+ *
  * Navbar
  *
  */
 
 .navbar {
-    min-height: 70px;
+    min-height: $nav-height;
 }
 
 .navbar-brand {
@@ -34,7 +44,7 @@ p {
 
 .navbar-fixed-top {
     border-width: 0;
-    box-shadow: 0px 2px 10px $gray;
+    // box-shadow: 0px 2px 10px $gray;
 }
 
 .navbar-inverse .navbar-nav > li > a:hover, .navbar-inverse .navbar-nav > li > a:focus {
@@ -47,6 +57,19 @@ p {
 
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
     background-color: $brand-light;
+}
+
+/**
+ *
+ * Custom
+ *
+ */
+
+.form {
+    padding: $panel-body-padding;
+    border-radius: $border-radius-large;
+    border: 1px solid $gray-lighter;
+    background-color: $gray-lightest;
 }
 
 /* Extra small devices (phones, less than 768px) */
