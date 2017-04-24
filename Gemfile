@@ -41,6 +41,9 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'modernizr-rails', '~> 2.7', '>= 2.7.1'
 
+# Testing
+gem 'rails-controller-testing'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri

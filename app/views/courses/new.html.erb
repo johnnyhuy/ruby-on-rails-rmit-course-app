@@ -1,15 +1,24 @@
-<h1>Create a new course</h1>
-<%= form_for :course, url: courses_path do |f| %>
-  <%= f.label :name %>
-  <br>
-  <%= f.text_field :name %>
-  <br>
-  <%= f.label :category %>
-  <br>
-  <%= check_box_tag :category %>
-  <%= label_tag :category, "Web Development" %>
-  <%= check_box_tag :category %>
-  <%= label_tag :category, "Java" %>
-  <br>
-  <%= f.submit %>
-<% end %>
+<% provide(:title, "New Course - ") %>
+<div class="container">
+  <h1>Create a new course</h1>
+  <p class="lead">Fill out the following fields below to create a new course.</p>
+  <div class="form">
+    <%= form_for :course, url: courses_path do |f| %>
+      <div class="form-group">
+        <%= f.label :name, for: 'inputName' %>
+        <%= f.text_field :name, class: 'form-control', placeholder: 'Course Name', id: 'inputName' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :category, for: 'inputDescription' %>
+        <%= f.text_field :name, class: 'form-control', placeholder: 'Course Description', id: 'inputDescription' %>
+      </div>
+      <div class="form-group">
+        <%= check_box_tag :category %>
+        <%= label_tag :category, "Web Development" %>
+        <%= check_box_tag :category %>
+        <%= label_tag :category, "Java" %>
+      </div>
+      <%= f.submit class: 'btn btn-default' %>
+    <% end %>
+  </div>
+</div>
