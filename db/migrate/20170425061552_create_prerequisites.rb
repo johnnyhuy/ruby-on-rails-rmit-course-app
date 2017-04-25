@@ -5,5 +5,8 @@ class CreatePrerequisites < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
+
+    add_index :prerequisites, :id, unique: true
+    add_index :prerequisites, :name, unique: true
   end
 end
