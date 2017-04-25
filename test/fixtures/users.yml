@@ -1,9 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  email: MyString
-
+  name: John Doe
+  email: johndoe@email.com
 two:
-  name: MyString
-  email: MyString
+  name: Jenny Nguyen
+  email: jenny643@gmail.com
+three:
+  name: Jen Doe
+  email: jendoe@email.com
+four:
+  name: Luke Dam
+  email: luke2233@email.com
+five:
+  name: Ava O\' Brian
+  email: ava33221x@email.com
+six:
+  name: Johnny Huynh
+  email: ***REMOVED***
