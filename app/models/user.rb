@@ -1,7 +1,6 @@
 class User < ApplicationRecord
-  before_save {
-    self.email = email.downcase
-  }
+  has_secure_password
+  before_save :downcase_fields
 
   # Validation rules
   validates :name,
@@ -9,6 +8,9 @@ class User < ApplicationRecord
     length: {
       minimum: 2,
       maximum: 32
+    },
+    format: {
+      with: /\A[a-zA-Z\s]+\z/
     }
   validates :email,
     presence: true,
@@ -17,7 +19,7 @@ class User < ApplicationRecord
       maximum: 255
     },
     format: {
-      with: /\A([\w+\-].?)+@[A-z\d\-]+(\.[A-z]+)*\.[A-z]+\z/i
+      with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
     },
     uniqueness: {
       case_sensitive: false
@@ -29,8 +31,11 @@ class User < ApplicationRecord
       maximum: 32
     },
     format: {
-      with: /\A[A-Z]+[0-9]+[a-z]+\z/
+      with: /\A^(?=.*[A-Z])(?=.*[\d])[\S]*/,
+      message: 'is invalid (must contain an uppercase letter and a number)'
     }
 
-  has_secure_password
+  def downcase_fields
+    self.email.downcase!
+  end
 end

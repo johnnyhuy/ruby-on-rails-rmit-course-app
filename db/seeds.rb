@@ -8,17 +8,17 @@
 
 # User data
 userData = [
-  ['John Doe', 'johndoe@email.com'],
-  ['Jenny Nguyen', 'jenny643@gmail.com'],
-  ['Jen Doe', 'jendoe@email.com'],
-  ['Luke Dam', 'luke2233@email.com'],
-  ['Ava O\' Brian', 'ava33221x@email.com'],
-  ['Johnny Huynh', 'johnnyhuynhdev@gmail.com'],
+  ['John Doe', 'johndoe@email.com', 'Password123'],
+  ['Jenny Nguyen', 'jenny643@gmail.com', 'Password123'],
+  ['Jen Doe', 'jendoe@email.com', 'Password123'],
+  ['Luke Dam', 'luke2233@email.com', 'Password123'],
+  ['Ava O\' Brian', 'ava33221x@email.com', 'Password123'],
+  ['Johnny Huynh', 'johnnyhuynhdev@gmail.com', 'Password123'],
 ]
 
 # Create user data
-userData.each do |name, email|
-  User.create(name: name, email: email)
+userData.each do |name, email, password|
+  User.create(name: name, email: email, password: password, password_confirmation: password)
 end
 
 # Crate courses
