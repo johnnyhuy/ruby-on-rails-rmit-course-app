@@ -1,15 +1,6 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionDispatch::IntegrationTest
-  def setup
-    @user_params = {
-      name: '',
-      email: '',
-      password: '',
-      password_confirmation: '',
-    }
-  end
-
   test "should get register page" do
     get register_url
     assert_response :success
