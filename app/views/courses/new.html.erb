@@ -3,6 +3,7 @@
 <p class="lead">Fill out the following fields below to create a new course.</p>
 <div class="form">
   <%= form_for :course, url: courses_path do |f| %>
+    <%= render 'shared/error_messages' %>
     <div class="form-group">
       <%= f.label :name, for: 'inputName' %>
       <%= f.text_field :name, class: 'form-control', placeholder: 'Course Name', id: 'inputName' %>
