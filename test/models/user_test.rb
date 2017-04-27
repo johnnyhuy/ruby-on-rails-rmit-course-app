@@ -76,10 +76,10 @@ class UserTest < ActiveSupport::TestCase
     assert @user.errors.messages[:password].include? 'can\'t be blank'
   end
 
-  test 'password should be at least 6 characters' do
+  test 'password should be at least 8 characters' do
     @user.password = 'a' * 5
     assert_not @user.valid?
-    assert @user.errors.messages[:password].include? 'is too short (minimum is 6 characters)'
+    assert @user.errors.messages[:password].include? 'is too short (minimum is 8 characters)'
   end
 
   test 'password should be less than 32 characters' do
@@ -109,7 +109,7 @@ class UserTest < ActiveSupport::TestCase
     @user.password_confirmation = @user.password
     assert @user.valid?
 
-    @user.password = 'PASSWORD332211!@#$%^&*'
+    @user.password = 'PASSWORD3322s11!@#$%^&*'
     @user.password_confirmation = @user.password
     assert @user.valid?
   end
