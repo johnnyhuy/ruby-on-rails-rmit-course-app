@@ -70,10 +70,10 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'password should be present' do
-    @user.password = ' '
-    @user.password_confirmation = ' '
+    @user.password = ''
+    @user.password_confirmation = ''
     assert_not @user.valid?
-    assert @user.errors.messages[:password].include? 'can\'t be blank'
+    assert @user.errors.messages[:password_confirmation].include? 'can\'t be blank'
   end
 
   test 'password should be at least 8 characters' do

@@ -74,7 +74,7 @@ input, select, textarea {
 }
 
 .navbar-inverse .navbar-brand:hover, .navbar-inverse .navbar-brand:focus {
-    background-color: $brand-light;
+    background-color: $brand-primary;
 }
 
 /**
@@ -82,6 +82,10 @@ input, select, textarea {
  * Buttons
  *
  */
+
+.btn-primary {
+    padding: 8px;
+}
 
 .btn-primary--wide {
     width: 100%;

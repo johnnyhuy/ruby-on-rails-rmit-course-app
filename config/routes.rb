@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  get 'register',   to: 'users#new'
+  get 'register', to: 'users#new'
+  get 'login', to: 'users#new'
   get 'sessions/new'
 
   resources :courses
