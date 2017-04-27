@@ -10,8 +10,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)    # Not the final implementation!
     if @user.save
-      redirect_to register_path, flash: { notice: 'Successfully registered a coordinator, please login.' }
       # Handle a successful save.
+      redirect_to login_path, flash: { success: 'Successfully registered a coordinator, please login.' }
     else
       render 'new'
       # redirect_to register_path, flash: { errors: @user.errors.full_messages }

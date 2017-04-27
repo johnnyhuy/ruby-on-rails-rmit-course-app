@@ -102,6 +102,11 @@ input, select, textarea {
     border-radius: $border-radius-large;
     border: 1px solid $gray-lighter;
     background-color: $gray-lightest;
+
+    p.register {
+        text-align: center;
+        font-size: $font-size-base;
+    }
 }
 
 #error_explanation {

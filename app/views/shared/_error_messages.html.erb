@@ -1,12 +1,7 @@
-<% if collection.errors.any? %>
+<% if flash.any? %>
   <div id="error_explanation">
-    <div class="alert alert-danger">
-      The form contains <%= pluralize(collection.errors.count, "error") %>.
-    </div>
-    <ul>
-    <% collection.errors.full_messages.each do |msg| %>
-      <li><%= msg %></li>
+    <% flash.each do |message_type, message| %>
+      <div class="alert alert-<%= message_type %>"><%= message %></div>
     <% end %>
-    </ul>
   </div>
 <% end %>
