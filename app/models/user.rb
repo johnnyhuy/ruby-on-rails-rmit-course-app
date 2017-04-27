@@ -25,15 +25,16 @@ class User < ApplicationRecord
       case_sensitive: false
     }
   validates :password,
-    presence: true,
     length: {
-      minimum: 6,
+      minimum: 8,
       maximum: 32
     },
     format: {
-      with: /\A^(?=.*[A-Z])(?=.*[\d])[\S]*/,
+      with: /\A^(?=.*[A-Z])(?=.*[\d])(?=.*[a-z])[\S]*/,
       message: 'is invalid (must contain an uppercase letter and a number)'
     }
+  validates :password_confirmation,
+    presence: true
 
   def downcase_fields
     self.email.downcase!

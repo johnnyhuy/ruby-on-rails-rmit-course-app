@@ -17,7 +17,11 @@ p {
     font-family: $font-family-second;
 }
 
-input, button, select, textarea {
+button, input[type='submit'] {
+    font-family: $font-family-base;
+}
+
+input, select, textarea {
     font-family: $font-family-second;
 }
 
@@ -75,7 +79,17 @@ input, button, select, textarea {
 
 /**
  *
- * Custom
+ * Buttons
+ *
+ */
+
+.btn-primary--wide {
+    width: 100%;
+}
+
+/**
+ *
+ * Forms
  *
  */
 
@@ -84,6 +98,18 @@ input, button, select, textarea {
     border-radius: $border-radius-large;
     border: 1px solid $gray-lighter;
     background-color: $gray-lightest;
+}
+
+#error_explanation {
+    color: $brand-danger;
+
+    li {
+        margin-bottom: 4px;
+    }
+
+    ul, ol {
+        margin-bottom: 20px;
+    }
 }
 
 /* Extra small devices (phones, less than 768px) */
