@@ -1,7 +1,7 @@
 
 <div class="container">
     <h1>View all courses</h1>
-    
+    <h3><%= sprintf "Will select %s from %s", @reminder_id, @reminder_cat %></h3>
     <% @courses.each do |course| %>
     <div class="jumbotron">
         <h2><%= course.name || "No Coursename Found" %></h2>
@@ -15,5 +15,4 @@
         <p>created: <%= course.created_at %></p>
     </div>
     <% end %>
-    
 </div>
