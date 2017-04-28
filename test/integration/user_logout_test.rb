@@ -13,5 +13,11 @@ class UserLogoutTest < ActionDispatch::IntegrationTest
 
     # Check if user is not logged in
     assert_not logged_in?
+
+    # Follow
+    follow_redirect!
+
+    # Check if page redirects to home page
+    assert_equal request.path_info, root_path
   end
 end
