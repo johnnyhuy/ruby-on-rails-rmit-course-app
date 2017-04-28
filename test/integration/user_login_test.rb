@@ -22,7 +22,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'login successful' do
+  test 'login successful without remember me' do
     get login_url
     post login_url,
       params: { session: @user_params }
@@ -33,11 +33,38 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     # Follow
     follow_redirect!
 
-    # Check if page redirects to home page
+    # Redirect page should by home page
     assert_equal request.path_info, root_path
 
-    # Check if user is logged in
+    # User should be logged in
     assert logged_in?
+
+    # Cookies should not exist
+    assert cookies[:user_id].nil?
+  end
+
+  test 'login successful with remember me' do
+    # Set remember me param to true
+    @user_params[:remember_me] = 1
+
+    get login_url
+    post login_url,
+      params: { session: @user_params }
+
+    # Success message should exist
+    assert flash[:success].present?
+
+    # Follow
+    follow_redirect!
+
+    # Redirect page should by home page
+    assert_equal request.path_info, root_path
+
+    # User should be logged in
+    assert logged_in?
+
+    # Cookies should exist
+    assert_not cookies[:user_id].nil?
   end
 
   test 'current user exists' do
@@ -48,13 +75,13 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     post login_url,
       params: { session: @user_params }
 
-    # Check if current user exists
+    # Current user should exist
     assert_not current_user.nil?
 
     # Get the user via email
     user = User.find_by(email: @user_params[:email])
 
-    # Check user information is the same
+    # Found user information should be the same as current user
     assert_equal current_user.name, user.name
     assert_equal current_user.email, user.email
   end
