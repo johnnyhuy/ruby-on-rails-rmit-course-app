@@ -1,0 +1,23 @@
+
+<div class="container">
+    <h1>View all courses</h1>
+        <table>
+          <tr>
+            <th><h2>Name</h2></th>
+            <th><h2>Prerequisite</h2></th>
+            <th><h2>Description</h2></th>
+            <th><h2>Created</h2></th>
+          </tr>
+         
+        <% @courses.each do |course| %>
+        <div>
+          <tr>
+            <td><%= course.name %></td>
+            <td><%= course.prerequisite %></td>
+            <td><%= course.description %></td>
+            <td><%= course.created_at %></td>
+          </tr>
+        </div>
+        <% end %>
+        </table>
+</div>
