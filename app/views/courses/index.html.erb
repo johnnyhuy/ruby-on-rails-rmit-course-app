@@ -1,0 +1,18 @@
+
+<div class="container">
+    <h1>View all courses</h1>
+    <h3><%= sprintf "Will select %s from %s", @reminder_id, @reminder_cat %></h3>
+    <% @courses.each do |course| %>
+    <div class="jumbotron">
+        <h2><%= course.name || "No Coursename Found" %></h2>
+        <p>Prerequisite: <%= course.prerequisite %></p>
+        <p>Category: <% course.categories.each do |category| %>
+            <%= category.name %>
+        <% end %></p>
+        <p>location: <% course.locations.each do |location| %>
+            <%= location.name %>
+        <% end %></p>
+        <p>created: <%= course.created_at %></p>
+    </div>
+    <% end %>
+</div>
