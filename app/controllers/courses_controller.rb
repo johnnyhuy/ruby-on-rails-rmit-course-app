@@ -1,13 +1,12 @@
 class CoursesController < ApplicationController
+  include CoursesHelper
   
   def create
     render plain: params[:course].inspect
   end
 
   def index
-    @reminder_id = params[:id] || "*"
-    @reminder_cat = params[:table] || "Courses" 
-    @courses = Course.all
+    @courses = list
   end
 
   def new
