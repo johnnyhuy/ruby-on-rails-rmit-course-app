@@ -3,13 +3,13 @@
     <h1>View all courses</h1>
     <% @courses.each do |course| %>
     <div class="jumbotron">
-        <h2><%= course.name || "No Coursename Found" %></h2>
+        <h2><%= link_to course.name, course_path(:id => course.id) %></h2>
         <p>Prerequisite: <%= course.prerequisite %></p>
         <p>Category: <% course.categories.each do |category| %>
-            <span style="padding-right:25px;"> <%=  category.name %> </span>
+            <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
         <% end %></p>
         <p>Location: <% course.locations.each do |location| %>
-            <span style="padding-right:25px;"> <%= location.name %> </span>
+            <span style="padding-right:25px;"> <%= link_to location.name, courses_path(:id => location.id, :table => "Location") %> </span>
         <% end %></p>
         <p>Created: <%= course.created_at %></p>
     </div>
