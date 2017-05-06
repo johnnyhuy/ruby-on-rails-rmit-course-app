@@ -1,0 +1,19 @@
+
+<div class="container">
+    <h1> <%= @course.name %> </h1>
+    <hr>
+    <h3>Prerequisite:  <%= @course.prerequisite %> </h3>
+    <div class="jumbotron">
+        <p><label>Category:</label> <% @course.categories.each do |category| %>
+            <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
+        <% end %></p>
+        <p><label>Location:</label> <% @course.locations.each do |location| %>
+            <span style="padding-right:25px;"> <%= link_to location.name, courses_path(:id => location.id, :table => "Location") %> </span>
+        <% end %></p>
+        <p>
+            <h4>Course Description: </h4>
+            <%= @course.description %>
+        </p>
+    </div>
+    <p><a class="btn btn-primary btn-lg" href="/courses" role="button">Return To Courses List</a></p>
+</div>
