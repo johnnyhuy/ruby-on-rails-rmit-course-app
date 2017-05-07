@@ -1,6 +1,6 @@
 class CoursesController < ApplicationController
   include CoursesHelper
-  
+
   def create
     render plain: params[:course].inspect
   end
@@ -12,7 +12,7 @@ class CoursesController < ApplicationController
   def new
 
   end
-  
+
   def show
     @course = Course.find(params[:id])
   end
