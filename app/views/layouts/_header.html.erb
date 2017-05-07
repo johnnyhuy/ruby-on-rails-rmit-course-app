@@ -15,7 +15,7 @@
           <a href="/categories" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Category <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <% @category_tags.each do |category| %>
-              <li><%= link_to category.name, courses_path(:id => category.id, :table => "Category") %></li>
+              <li><%= link_to category.name, category %></li>
             <% end %>
             <li role="separator" class="divider"></li>
             <li><%= link_to 'Create Category', new_category_path %></li>
@@ -25,7 +25,7 @@
           <a href="/location" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Location <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <% @location_tags.each do |location| %>
-              <li><%= link_to location.name, courses_path(:id => location.id, :table => "Location") %></li>
+              <li><%= link_to location.name, location %></li>
             <% end %>
             <li role="separator" class="divider"></li>
             <li><%= link_to 'Create Location', new_location_path %></li>
