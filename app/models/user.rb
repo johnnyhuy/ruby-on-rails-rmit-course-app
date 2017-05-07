@@ -2,22 +2,31 @@ class User < ApplicationRecord
   # Public accessors e.g. User.remember_token
   attr_accessor :remember_token
 
-  # Call secure password method
-  has_secure_password
-
-  # Call certain methods before saving to db
-  before_save :downcase_fields
-
   # Validation rules
-  validates :name,
+
+  # First Name
+  validates :firstname,
     presence: true,
     length: {
-      minimum: 2,
-      maximum: 32
+      minimum: 3,
+      maximum: 24
     },
     format: {
-      with: /\A[a-zA-Z\s]+\z/
+      with: /\A[a-zA-Z]+\z/
     }
+
+  # Last Name
+  validates :lastname,
+    presence: true,
+    length: {
+      minimum: 3,
+      maximum: 24
+    },
+    format: {
+      with: /\A[a-zA-Z]+\z/
+    }
+
+  # Email
   validates :email,
     presence: true,
     length: {
@@ -25,11 +34,14 @@ class User < ApplicationRecord
       maximum: 255
     },
     format: {
-      with: /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
+      with: /\A[\w]+\.[\w]+@rmit.edu.au\z/i,
+      message: 'is only open to RMIT staff & must contain your first and last name (first.last@rmit.edu.au)'
     },
     uniqueness: {
       case_sensitive: false
     }
+
+  # Password
   validates :password,
     length: {
       minimum: 8,
@@ -42,9 +54,11 @@ class User < ApplicationRecord
   validates :password_confirmation,
     presence: true
 
-  def downcase_fields
-    self.email.downcase!
-  end
+  # Call certain methods before saving to DB
+  before_save :downcase_fields
+
+  # Call secure password method
+  has_secure_password
 
   # Returns the hash digest of the given string.
   def self.digest(string)
@@ -55,6 +69,16 @@ class User < ApplicationRecord
   # Create a remember token
   def self.new_token
     SecureRandom.urlsafe_base64
+  end
+
+  # Print full name
+  def full_name
+    "#{self.firstname} #{self.lastname}"
+  end
+
+  # Downcase certain fields
+  def downcase_fields
+    self.email.downcase!
   end
 
   # Remembers a user in the database for use in persistent sessions.

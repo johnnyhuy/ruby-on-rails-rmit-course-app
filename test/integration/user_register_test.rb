@@ -5,8 +5,9 @@ class UserRegisterTest < ActionDispatch::IntegrationTest
     # User parameters
     # An ideal valid user
     @user_params = {
-      name: 'Example User',
-      email: 'example@email.com',
+      firstname: 'example',
+      lastname: 'user',
+      email: 'example.user@rmit.edu.au',
       password: 'Password123',
       password_confirmation: 'Password123',
     }
@@ -18,8 +19,8 @@ class UserRegisterTest < ActionDispatch::IntegrationTest
     # Check if total user count changes
     assert_no_difference 'User.count' do
       # Make a mistake in the param
-      # In this case it's the empty name
-      @user_params[:name] = ''
+      # In this case it's the empty email
+      @user_params[:email] = ''
 
       # Post request data
       post users_path, params: { user: @user_params }
