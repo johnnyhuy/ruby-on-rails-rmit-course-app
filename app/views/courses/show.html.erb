@@ -2,7 +2,11 @@
 <div class="container">
     <h1> <%= @course.name %> </h1>
     <hr>
-    <h3>Prerequisite:  <%= @course.prerequisite %> </h3>
+    <h3>Prerequisite:  <%= @course.prerequisite %> 
+        <div align="right">
+            <a class="btn btn-primary btn-lg" role="button" align="right">Edit This Course</a>
+        </div>
+    </h3>
     <div class="jumbotron">
         <p><label>Category:</label> <% @course.categories.each do |category| %>
             <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
