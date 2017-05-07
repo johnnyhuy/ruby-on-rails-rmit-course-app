@@ -34,4 +34,16 @@ class UserLogoutTest < ActionDispatch::IntegrationTest
     # Check if page redirects to home page
     assert_equal request.path_info, root_path
   end
+
+
+  test 'guest cannot logout' do
+    # Visit logout path
+    delete logout_path
+
+    # Follow redirect
+    follow_redirect!
+
+    # Should redirect login
+    assert_equal request.path_info, login_path
+  end
 end

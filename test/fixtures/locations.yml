@@ -4,8 +4,11 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+locationOne:
+  name: '080.04.006'
+locationTwo:
+  name: '056.05.097'
+locationThree:
+  name: '057.03.010'
+locationFour:
+  name: '080.04.011'
