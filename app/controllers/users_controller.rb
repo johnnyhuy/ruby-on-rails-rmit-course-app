@@ -8,7 +8,10 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)    # Not the final implementation!
+    # Start a new User
+    @user = User.new(user_params)
+
+    # Save user to DB
     if @user.save
       # Handle a successful save.
       redirect_to login_path, flash: { success: 'Successfully registered a coordinator, please login.' }
@@ -24,7 +27,8 @@ class UsersController < ApplicationController
         return false
       else
         return params.require(:user).permit(
-          :name,
+          :firstname,
+          :lastname,
           :email,
           :password,
           :password_confirmation

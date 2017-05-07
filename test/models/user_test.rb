@@ -3,9 +3,11 @@ require 'test_helper'
 class UserTest < ActiveSupport::TestCase
   def setup
     # Ideal user
+    # User is not saved to DB
     @user = User.new(
-      name: 'Test User',
-      email: 'user@example.com',
+      firstname: 'Example',
+      lastname: 'User',
+      email: 'example.user@rmit.edu.au',
       password: 'Password123',
       password_confirmation: 'Password123'
     )
@@ -15,22 +17,68 @@ class UserTest < ActiveSupport::TestCase
     assert @user.valid?
   end
 
-  test 'name should be present' do
-    @user.name = ' '
+  test 'first name should be present' do
+    @user.firstname = ' '
     assert_not @user.valid?
-    assert @user.errors.messages[:name].include? 'can\'t be blank'
+    assert @user.errors.messages[:firstname].include? 'can\'t be blank'
   end
 
-  test 'name should not be too long' do
-    @user.name = 'a' * 64
+  test 'first name should not be too long' do
+    @user.firstname = 'a' * 64
     assert_not @user.valid?
-    assert @user.errors.messages[:name].include? 'is too long (maximum is 32 characters)'
+    assert @user.errors.messages[:firstname].include? 'is too long (maximum is 24 characters)'
   end
 
-  test 'name should not be too short' do
-    @user.name = 'a'
+  test 'first name should not be too short' do
+    @user.firstname = 'a'
     assert_not @user.valid?
-    assert @user.errors.messages[:name].include? 'is too short (minimum is 2 characters)'
+    assert @user.errors.messages[:firstname].include? 'is too short (minimum is 3 characters)'
+  end
+
+  test 'first name is invalid' do
+    # Contains a special character
+    @user.firstname = 'j@hn'
+    assert_not @user.valid?
+
+    # Contains a space
+    @user.firstname = 'john doe'
+    assert_not @user.valid?
+
+    # Contains numbers
+    @user.firstname = 'john123'
+    assert_not @user.valid?
+  end
+
+  test 'last name should be present' do
+    @user.lastname = ' '
+    assert_not @user.valid?
+    assert @user.errors.messages[:lastname].include? 'can\'t be blank'
+  end
+
+  test 'last name should not be too long' do
+    @user.lastname = 'a' * 64
+    assert_not @user.valid?
+    assert @user.errors.messages[:lastname].include? 'is too long (maximum is 24 characters)'
+  end
+
+  test 'last name should not be too short' do
+    @user.lastname = 'a'
+    assert_not @user.valid?
+    assert @user.errors.messages[:lastname].include? 'is too short (minimum is 3 characters)'
+  end
+
+  test 'last name is invalid' do
+    # Contains a special character
+    @user.lastname = 'd@e'
+    assert_not @user.valid?
+
+    # Contains a space
+    @user.lastname = 'john doe'
+    assert_not @user.valid?
+
+    # Contains numbers
+    @user.lastname = 'doe123'
+    assert_not @user.valid?
   end
 
   test 'email should be present' do
@@ -54,19 +102,36 @@ class UserTest < ActiveSupport::TestCase
   test 'email is invalid' do
     @user.email = 'aaa@aa.C@m'
     assert_not @user.valid?
+
+    # Email is not in the correct format
+    # <firstname>.<lastname>@rmit.edu.au
+    @user.email = 'example@email.com'
+    assert_not @user.valid?
+
+    # No period in the email name
+    @user.email = 'johndoe@rmit.edu.au'
+    assert_not @user.valid?
+
+    # Domain is incorrect
+    @user.email = 'jen.doe@email.com'
+    assert_not @user.valid?
+
+    # Domain is correct but email name is invalid
+    @user.email = 'example@rmit.edu.au'
+    assert_not @user.valid?
   end
 
   test 'email addresses should be unique' do
-    duplicate_user = User.new(name: 'Test User', email: @user.email)
+    duplicate_user = User.new(email: @user.email)
     @user.save
     assert_not duplicate_user.valid?
     assert duplicate_user.errors.messages[:email].include? 'has already been taken'
   end
 
   test 'email is lowercase' do
-    @user.email = 'ABC@EXAMPLE.COM'
+    @user.email = 'EXAMPLE.USER@RMIT.EDU.AU'
     @user.save
-    assert @user.email == 'abc@example.com'
+    assert @user.email == 'example.user@rmit.edu.au'
   end
 
   test 'password should be present' do
@@ -127,5 +192,9 @@ class UserTest < ActiveSupport::TestCase
     @user.password_confirmation = ''
     assert_not @user.valid?
     assert @user.errors.messages[:password_confirmation].include? 'doesn\'t match Password'
+  end
+
+  test 'get user full name' do
+    assert_equal @user.full_name, "#{@user.firstname} #{@user.lastname}"
   end
 end

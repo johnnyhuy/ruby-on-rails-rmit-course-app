@@ -4,13 +4,14 @@ class UserLoginTest < ActionDispatch::IntegrationTest
   def setup
     # User parameters
     @user_params = {
-      email: 'example@email.com',
+      email: 'example.user@rmit.edu.au',
       password: 'Password123',
     }
 
     # Create an existing user
-    User.create(
-      name: 'Example User',
+    @user = User.create(
+      firstname: 'Example',
+      lastname: 'User',
       email: @user_params[:email],
       password: @user_params[:password],
       password_confirmation: @user_params[:password]
@@ -22,7 +23,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'login successful without remember me' do
+  test 'login successful' do
     get login_url
     post login_url,
       params: { session: @user_params }
@@ -37,19 +38,14 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_equal request.path_info, root_path
 
     # User should be logged in
-    assert logged_in?
+    assert logged_in_session?
 
     # Cookies should not exist
     assert cookies[:user_id].nil?
   end
 
-  test 'login successful with remember me' do
-    # Set remember me param to true
-    @user_params[:remember_me] = 1
-
-    get login_url
-    post login_url,
-      params: { session: @user_params }
+  test 'login with remembering' do
+    login_as @user, remember_me: '1'
 
     # Success message should exist
     assert flash[:success].present?
@@ -61,29 +57,17 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_equal request.path_info, root_path
 
     # User should be logged in
-    assert logged_in?
+    assert logged_in_session?
 
-    # Cookies should exist
-    assert_not cookies[:user_id].nil?
+    # Simulate session expire
+    session[:user_id] = nil
+
+    # Remember token should exist in cookie
+    assert_not_empty cookies['remember_token']
   end
 
-  test 'current user exists' do
-    # Visit login page
-    get login_url
-
-    # Login
-    post login_url,
-      params: { session: @user_params }
-
-    # Current user should exist
-    assert_not current_user.nil?
-
-    # Get the user via email
-    user = User.find_by(email: @user_params[:email])
-
-    # Found user information should be the same as current user
-    assert_equal current_user.name, user.name
-    assert_equal current_user.email, user.email
+  test 'no remember token' do
+    assert_not @user.authenticated?('')
   end
 
   test 'invalid login details' do

@@ -20,4 +20,9 @@ class CategoriesController < ApplicationController
     def new
        @category = Category.new(name: "")
     end
+
+    def show
+      @category = Category.find(params[:id])
+      @courses = @category.courses
+    end
 end

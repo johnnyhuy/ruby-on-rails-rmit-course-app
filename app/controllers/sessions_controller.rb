@@ -3,15 +3,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    remember_me = params[:session][:remember_me]
+    remember_me ||= params[:session][:remember_me]
     user = User.find_by(email: params[:session][:email].downcase)
-    if user and user.authenticate(params[:session][:password])
-      if remember_me
-        # Remember user
-        remember user
 
-        puts 'remember me!'
-      end
+    if user and user.authenticate(params[:session][:password])
+      # Check if remember me param is true
+      remember_me == '1' ? remember(user) : forget(user)
 
       # Show success message
       flash[:success] = 'Successfully logged in.'
