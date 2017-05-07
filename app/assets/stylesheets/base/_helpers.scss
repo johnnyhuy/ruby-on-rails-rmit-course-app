@@ -1,0 +1,74 @@
+// Typography
+.bold     { font-weight: bold; }
+.regular  { font-weight: normal; }
+.italic   { font-style: italic; }
+
+.ell {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.break-word { word-wrap: break-word; }
+.no-wrap    { white-space: nowrap; }
+
+// Text align
+.text-left    { text-align: left; }
+.text-right   { text-align: right; }
+.text-center  { text-align: center; }
+.text-just    { text-align: justify; }
+
+.align-top    { vertical-align: top; }
+.align-bottom { vertical-align: bottom; }
+.align-middle { vertical-align: middle; }
+
+// Float
+.left  { float: left; }
+.right { float: right; }
+
+.clearfix {
+    &:before,
+    &:after {
+        content: "";
+        display: table;
+    }
+
+    &:after { clear: both; }
+}
+
+// Position and Z-index
+.fixed    { position: fixed; }
+.relative { position: relative; }
+.absolute { position: absolute; }
+.static   { position: static; }
+
+.zindex-1 { z-index: 1; }
+.zindex-2 { z-index: 2; }
+.zindex-3 { z-index: 3; }
+
+.pin-top-right {
+    top: 0;
+    right: 0;
+}
+
+.pin-bottom-right {
+    bottom: 0;
+    right: 0;
+}
+
+// Margins and Padding
+$base-space-unit: 1em;
+
+// Top margin
+.margin-top-none    { margin-top: 0; }
+.margin-top-quarter { margin-top: $base-space-unit / 4; }
+.margin-top-half    { margin-top: $base-space-unit / 2; }
+.margin-top-one     { margin-top: $base-space-unit; }
+.margin-top-two     { margin-top: $base-space-unit * 2; }
+
+// Top padding
+.padding-top-none    { padding-top: 0; }
+.padding-top-quarter { padding-top: $base-space-unit / 4; }
+.padding-top-half    { padding-top: $base-space-unit / 2; }
+.padding-top-one     { padding-top: $base-space-unit; }
+.padding-top-two     { padding-top: $base-space-unit * 2; }

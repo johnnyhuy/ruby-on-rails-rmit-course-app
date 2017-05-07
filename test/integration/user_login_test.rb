@@ -9,7 +9,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     }
 
     # Create an existing user
-    User.create(
+    @user = User.create(
       name: 'Example User',
       email: @user_params[:email],
       password: @user_params[:password],
@@ -22,7 +22,7 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test 'login successful without remember me' do
+  test 'login successful' do
     get login_url
     post login_url,
       params: { session: @user_params }
@@ -37,19 +37,14 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_equal request.path_info, root_path
 
     # User should be logged in
-    assert logged_in?
+    assert logged_in_session?
 
     # Cookies should not exist
     assert cookies[:user_id].nil?
   end
 
-  test 'login successful with remember me' do
-    # Set remember me param to true
-    @user_params[:remember_me] = 1
-
-    get login_url
-    post login_url,
-      params: { session: @user_params }
+  test 'login with remembering' do
+    login_as @user, remember_me: '1'
 
     # Success message should exist
     assert flash[:success].present?
@@ -61,10 +56,17 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     assert_equal request.path_info, root_path
 
     # User should be logged in
-    assert logged_in?
+    assert logged_in_session?
 
-    # Cookies should exist
-    assert_not cookies[:user_id].nil?
+    # Simulate session expire
+    session[:user_id] = nil
+
+    # Remember token should exist in cookie
+    assert_not_empty cookies['remember_token']
+  end
+
+  test 'no remember token' do
+    assert_not @user.authenticated?('')
   end
 
   test 'current user exists' do
