@@ -20,4 +20,9 @@ class LocationsController < ApplicationController
             { success: 'Successfully created location. ' + @location.name }
         end
     end
+
+    def show
+      @location = Location.find(params[:id])
+      @courses = @location.courses
+    end
 end
