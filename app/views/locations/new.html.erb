@@ -1,0 +1,13 @@
+<% provide(:title, "New Location - ") %>
+<h1>Create a new location</h1>
+<p class="lead">Enter the name for a new location, example format 001.01.100</p>
+<div class="form">
+    <%= form_for @location do |f| %>
+        <%= render 'shared/error_messages' %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control', placeholder: 'Location Name' %>
+        </div>
+        <%= f.submit class: 'btn btn-default' %>
+    <% end %>
+</div>
