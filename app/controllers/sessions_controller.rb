@@ -1,4 +1,7 @@
 class SessionsController < ApplicationController
+  # Middleware
+  before_action :logged_users_only, only: :destroy
+
   def new
   end
 
@@ -28,7 +31,9 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    logout if logged_in?
-    redirect_to root_path, flash: { success: 'Successfully logged out.' }
+    if logged_in?
+      logout
+      redirect_to root_path, flash: { success: 'Successfully logged out.' }
+    end
   end
 end

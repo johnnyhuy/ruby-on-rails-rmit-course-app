@@ -11,6 +11,8 @@ class UserRegisterTest < ActionDispatch::IntegrationTest
       password: 'Password123',
       password_confirmation: 'Password123',
     }
+
+    @user = User.new(@user_params)
   end
 
   test "invalid signup information" do
@@ -41,5 +43,22 @@ class UserRegisterTest < ActionDispatch::IntegrationTest
 
     # Check if page redirects to login page
     assert_equal request.path_info, login_path
+  end
+
+  test 'logged in user should not register' do
+    # Create user in DB
+    user = User.create(@user_params)
+
+    # Login as user
+    login_as user
+
+    # Visit registration page
+    post users_path
+
+    # Follow redirect
+    follow_redirect!
+
+    # Check if page redirects to root
+    assert_equal request.path_info, root_path
   end
 end

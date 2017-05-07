@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+  # Middleware
+  before_action :guests_only, only: [:new, :create]
+
   def index
     @users = User.all
   end
