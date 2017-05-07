@@ -4,8 +4,9 @@ class UserLogoutTest < ActionDispatch::IntegrationTest
   def setup
     # Create an existing user
     @user = User.create(
-      name: 'Example User',
-      email: 'Example@email.com',
+      firstname: 'Example',
+      lastname: 'User',
+      email: 'example.user@rmit.edu.au',
       password: 'Password123',
       password_confirmation: 'Password123'
     )
