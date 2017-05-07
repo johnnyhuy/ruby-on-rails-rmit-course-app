@@ -11,6 +11,5 @@ class CreateCourses < ActiveRecord::Migration[5.0]
 
     add_index :courses, :id, unique: true
     add_index :courses, :name, unique: true
-    add_index :courses, :user_id, unique: true
   end
 end
