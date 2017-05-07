@@ -1,20 +1,20 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+john:
   name: John Doe
   email: johndoe@email.com
-two:
+jen:
   name: Jenny Nguyen
   email: jenny643@gmail.com
-three:
+jen:
   name: Jen Doe
   email: jendoe@email.com
-four:
+luke:
   name: Luke Dam
   email: luke2233@email.com
-five:
+ava:
   name: Ava O\' Brian
   email: ava33221x@email.com
-six:
+johnny:
   name: Johnny Huynh
   email: ***REMOVED***
