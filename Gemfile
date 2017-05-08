@@ -41,6 +41,9 @@ gem 'bootstrap-sass', '~> 3.2.0'
 gem 'autoprefixer-rails'
 gem 'modernizr-rails', '~> 2.7', '>= 2.7.1'
 
+# Faker
+gem 'faker', '~> 1.7.3'
+
 # Testing
 gem 'rails-controller-testing'
 
