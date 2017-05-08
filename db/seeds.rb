@@ -35,6 +35,10 @@ webProgramming.categories << webDev
 progTechniques.categories << webDev
 progFundamentals.categories << webDev
 
+# Prerequisites
+progTechniques.prerequisites.create(id: progFundamentals.id, course_id: progTechniques.id)
+webProgramming.prerequisites.create(id: progFundamentals.id, course_id: webProgramming.id)
+
 # Create locations
 locationOne = Location.create(name: '080.04.006')
 locationTwo = Location.create(name: '056.05.097')

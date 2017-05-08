@@ -5,19 +5,21 @@
   <%= form_for :course, url: courses_path do |f| %>
     <%= render 'shared/error_messages' %>
     <div class="form-group">
-      <%= f.label :name, for: 'inputName' %>
-      <%= f.text_field :name, class: 'form-control', placeholder: 'Course Name', id: 'inputName' %>
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control', placeholder: 'Course Name' %>
     </div>
     <div class="form-group">
-      <%= f.label :category, for: 'inputDescription' %>
-      <%= f.text_field :name, class: 'form-control', placeholder: 'Course Description', id: 'inputDescription' %>
+      <%= f.label :description %>
+      <%= f.text_field :description, class: 'form-control', placeholder: 'Course Description' %>
     </div>
-    <div class="form-group">
-      <%= check_box_tag :category %>
-      <%= label_tag :category, "Web Development" %>
-      <%= check_box_tag :category %>
-      <%= label_tag :category, "Java" %>
-    </div>
-    <%= f.submit class: 'btn btn-default' %>
+    <script type="text/javascript">
+      $('.selectpicker').selectpicker();
+    </script>
+    <%= f.select @categories, class: 'selectpicker' do %>
+        <option>Mustard</option>
+        <option>Ketchup</option>
+        <option>Relish</option>
+    <% end %>
+    <%= f.submit class: 'btn btn-default', value: 'Create Course' %>
   <% end %>
 </div>
