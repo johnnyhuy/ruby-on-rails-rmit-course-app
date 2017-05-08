@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   post   'login',    to: 'sessions#create'
   delete 'logout',   to: 'sessions#destroy'
 
+  post   'courses/:id/like',     to: 'likes#new', as: 'like'
+  post   'courses/:id/dislike',  to: 'dislikes#new', as: 'dislike'
+
   # Resourceful routes
   # Follows the RESTful API
   resources :categories

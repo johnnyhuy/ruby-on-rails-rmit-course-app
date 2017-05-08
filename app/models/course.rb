@@ -12,6 +12,10 @@ class Course < ApplicationRecord
   has_many :likes
   has_many :users, through: :likes
 
+  # Dislikes
+  has_many :dislikes
+  has_many :users, through: :dislikes
+
   validates :name,
     presence: true,
     length: {

@@ -3,10 +3,10 @@
 <p class="lead">Enter the name for a new location, example format 001.01.100</p>
 <div class="form">
     <%= form_for @location do |f| %>
-        <%= render 'shared/error_messages' %>
+        <%= render 'shared/collection_error_messages', collection: @location %>
         <div class="form-group">
           <%= f.label :name %>
-          <%= f.text_field :name, class: 'form-control', placeholder: 'Location Name' %>
+          <%= f.text_field :name, class: 'form-control', id: 'location', placeholder: 'e.g. 001.01.100' %>
         </div>
         <%= f.submit class: 'btn btn-primary btn-primary--wide' %>
     <% end %>
