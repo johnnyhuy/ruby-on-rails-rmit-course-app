@@ -2,6 +2,10 @@ class User < ApplicationRecord
   # Public accessors e.g. User.remember_token
   attr_accessor :remember_token
 
+  # Association Macros
+  has_many :likes
+  has_many :courses, through: :likes
+
   # Validation rules
 
   # First Name

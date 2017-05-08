@@ -18,5 +18,6 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
+    @categories = Category.all
   end
 end
