@@ -3,6 +3,7 @@
 <p class="lead">Fill out the following fields below to register as a coordinator.</p>
 <div class="form">
   <%= form_for @user, url: users_path do |f| %>
+    <%= render 'shared/collection_error_messages', collection: @user %>
     <%= render 'shared/error_messages' %>
     <div class="form-group">
       <%= f.label :firstname %>

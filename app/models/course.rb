@@ -11,4 +11,24 @@ class Course < ApplicationRecord
   # Likes
   has_many :likes
   has_many :users, through: :likes
+
+  validates :name,
+    presence: true,
+    length: {
+      minimum: 2,
+      maximum: 32
+    },
+    format: {
+      with: /\A[\w\s\d]+\z/i,
+      message: 'is invalid, must only contain alpha-numeric characters.'
+    },
+    uniqueness: {
+      case_sensitive: false
+    }
+  validates :description,
+    presence: true,
+    length: {
+      minimum: 30,
+      maximum: 1024
+    }
 end

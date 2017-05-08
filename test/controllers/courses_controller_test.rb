@@ -11,11 +11,82 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
       password_confirmation: 'Password123'
     )
 
+    # New Course
+    @new_course = Course.new(
+      name: 'Example Course',
+      description: 'Example description' * 30,
+    )
+
+    # Different course
+    @diff_course = courses(:web)
+
+    # Location from fixture
+    @location = locations(:locationOne)
+
+    # Category from fixture
+    @category = categories(:web)
+
+    # Course params
+    @course_params = {
+      name: @new_course.name,
+      description: @new_course.description,
+      prerequisites: [@diff_course.id],
+      locations: [@location.id],
+      categories: [@category.id]
+    }
+
     # Use a fixture for course
     @course = courses(:web)
   end
 
-  test "should get new course and show title" do
+  test 'create course successful' do
+    # Login as user
+    login_as @user
+
+    # Post params
+    post courses_path, params: {course: @course_params}
+
+    # Follow redirect
+    follow_redirect!
+
+    # Show success message
+    assert flash[:success].present?
+
+    # Should redirect login
+    assert_equal request.path_info, courses_path
+  end
+
+  test 'course location does not exist' do
+    # Login as user
+    login_as @user
+
+    # Location ID does not exist
+    # Have an existing one in the array and vice versa
+    @course_params[:locations] = [@location.id, 1337]
+
+    # Post params
+    post courses_path, params: {course: @course_params}
+
+    # See if render is called
+    assert_template 'courses/new'
+  end
+
+  test 'course category does not exist' do
+    # Login as user
+    login_as @user
+
+    # Location ID does not exist
+    # Have an existing one in the array and vice versa
+    @course_params[:categories] = [@category, 1337]
+
+    # Post params
+    post courses_path, params: {course: @course_params}
+
+    # See if render is called
+    assert_template 'courses/new'
+  end
+
+  test 'should get new course and show title' do
     # Login as user
     login_as @user
 
