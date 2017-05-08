@@ -122,6 +122,9 @@ select.selectpicker {
   overflow: hidden;
   width: 100%;
   text-align: left;
+  font-family: $font-family-second;
+  font-weight: normal;
+  margin-top: 2px;
 }
 .bootstrap-select.btn-group .dropdown-toggle .caret {
   position: absolute;
@@ -217,6 +220,8 @@ select.selectpicker {
 }
 .bootstrap-select.btn-group.show-tick .dropdown-menu li a span.text {
   margin-right: 34px;
+  font-family: $font-family-second;
+  font-weight: normal;
 }
 .bootstrap-select.show-menu-arrow.open > .dropdown-toggle {
   z-index: 1061;

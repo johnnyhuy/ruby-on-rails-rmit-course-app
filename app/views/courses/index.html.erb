@@ -1,10 +1,9 @@
-
 <div class="container">
+    <%= render 'shared/error_messages' %>
     <h1>View all courses</h1>
     <% @courses.each do |course| %>
     <div class="jumbotron">
         <h2><%= link_to course.name, course_path(:id => course.id) %></h2>
-        <p>Prerequisite: <%= course.prerequisite %></p>
         <p>Category: <% course.categories.each do |category| %>
             <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
         <% end %></p>
