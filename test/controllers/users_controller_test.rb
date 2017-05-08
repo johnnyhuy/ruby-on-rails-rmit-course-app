@@ -33,7 +33,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'guest and logged in user can visit individual user page' do
-    # Visit all courses path
+    # Visit all users path
     get users_path(@user)
 
     # Should have no redirection
@@ -42,7 +42,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # Login as user
     login_as @user
 
-    # Visit all courses path
+    # Visit all users path
     get users_path(@user)
 
     # Should have no redirection
