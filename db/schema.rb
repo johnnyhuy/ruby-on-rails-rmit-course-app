@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170428024055) do
+ActiveRecord::Schema.define(version: 20170508024656) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -29,12 +29,14 @@ ActiveRecord::Schema.define(version: 20170428024055) do
 
   create_table "courses", force: :cascade do |t|
     t.string   "name"
+    t.integer  "user_id"
     t.string   "prerequisite"
     t.text     "description"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
     t.index ["id"], name: "index_courses_on_id", unique: true
     t.index ["name"], name: "index_courses_on_name", unique: true
+    t.index ["user_id"], name: "index_courses_on_user_id", unique: true
   end
 
   create_table "courses_locations", id: false, force: :cascade do |t|
@@ -44,11 +46,11 @@ ActiveRecord::Schema.define(version: 20170428024055) do
     t.index ["location_id"], name: "index_courses_locations_on_location_id"
   end
 
-  create_table "courses_prerequisites", id: false, force: :cascade do |t|
-    t.integer "course_id",       null: false
-    t.integer "prerequisite_id", null: false
-    t.index ["course_id"], name: "index_courses_prerequisites_on_course_id"
-    t.index ["prerequisite_id"], name: "index_courses_prerequisites_on_prerequisite_id"
+  create_table "likes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "locations", force: :cascade do |t|
@@ -59,12 +61,11 @@ ActiveRecord::Schema.define(version: 20170428024055) do
     t.index ["name"], name: "index_locations_on_name", unique: true
   end
 
-  create_table "prerequisites", force: :cascade do |t|
-    t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["id"], name: "index_prerequisites_on_id", unique: true
-    t.index ["name"], name: "index_prerequisites_on_name", unique: true
+  create_table "prerequisites", id: false, force: :cascade do |t|
+    t.integer "id"
+    t.integer "course_id"
+    t.index ["course_id"], name: "index_prerequisites_on_course_id"
+    t.index ["id"], name: "index_prerequisites_on_id"
   end
 
   create_table "users", force: :cascade do |t|
