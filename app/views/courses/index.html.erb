@@ -1,16 +1,22 @@
 <div class="container">
-    <%= render 'shared/error_messages' %>
-    <h1>View all courses</h1>
-    <% @courses.each do |course| %>
-    <div class="jumbotron">
-        <h2><%= link_to course.name, course_path(:id => course.id) %></h2>
-        <p>Category: <% course.categories.each do |category| %>
-            <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
-        <% end %></p>
-        <p>Location: <% course.locations.each do |location| %>
-            <span style="padding-right:25px;"> <%= link_to location.name, courses_path(:id => location.id, :table => "Location") %> </span>
-        <% end %></p>
-        <p>Created: <%= course.created_at %></p>
-    </div>
+  <%= render 'shared/error_messages' %>
+  <h1>View all courses</h1>
+  <% @courses.each do |course| %>
+  <div class="jumbotron">
+    <h2><%= link_to course.name, course_path(:id => course.id) %></h2>
+    <%= link_to like_path(course.id), method: :post do %>
+      <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
     <% end %>
+    <%= link_to dislike_path(course.id), method: :post do %>
+      <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+    <% end %>
+    <p>Category: <% course.categories.each do |category| %>
+      <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
+    <% end %></p>
+    <p>Location: <% course.locations.each do |location| %>
+      <span style="padding-right:25px;"> <%= link_to location.name, courses_path(:id => location.id, :table => "Location") %> </span>
+    <% end %></p>
+    <p>Created: <%= course.created_at %></p>
+  </div>
+  <% end %>
 </div>
