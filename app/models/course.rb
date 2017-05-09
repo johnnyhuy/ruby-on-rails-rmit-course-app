@@ -16,6 +16,8 @@ class Course < ApplicationRecord
   has_many :dislikes
   has_many :users, through: :dislikes
 
+  mount_uploader :image, CourseUploader
+
   validates :name,
     presence: true,
     length: {
