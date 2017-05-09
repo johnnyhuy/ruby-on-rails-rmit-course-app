@@ -1,2 +1,14 @@
-<%= @user.full_name + ', ' + @user.email %>
-<%= gravatar_for @user %>
+<%= render 'shared/error_messages' %>
+<div class="row">
+  <div class="col-xs-6 col-md-4">
+    <div class="block profile">
+        <%= image_tag gravatar_url(@user), class: 'profile__avatar' %>
+        <%= @user.full_name + ', ' + @user.email %>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-8">
+    <div class="block">
+
+    </div>
+  </div>
+</div>
