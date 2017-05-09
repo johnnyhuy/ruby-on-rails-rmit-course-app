@@ -11,7 +11,7 @@ class CoursesController < ApplicationController
     @courses = Course.all
 
     # Get course params
-    course_params = params.require(:course).permit([:name, :description])
+    course_params = params.require(:course).permit([:name, :description, :image])
 
     # New course
     @course = Course.new(course_params)

@@ -1,6 +1,6 @@
 class DislikesController < ApplicationController
   # Middleware
-  before_action :logged_users_only, only: [:like, :dislike]
+  before_action :logged_users_only
 
   def new
     course = Course.find_by_id(params[:id])

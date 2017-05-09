@@ -179,6 +179,12 @@ footer {
     color: $brand-light;
 }
 
+.thumbnail__image {
+    display: block;
+    width: 100%;
+    padding: 10px 10px 5px 10px;
+}
+
 .block {
     border: 1px solid $gray-lighter;
     box-shadow: 0 2px 4px #d2d2d2;
