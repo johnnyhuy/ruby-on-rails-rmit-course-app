@@ -9,7 +9,7 @@ $icon-font-path: 'bootstrap/';
 // --------------------------------------------------
 
 // Custom CSS
-$nav-height:            70px;
+$nav-height:            50px;
 
 //== Colors
 //
@@ -42,7 +42,7 @@ $brand-danger:          #d9534f !default;
 //## Settings for some of the most global styles.
 
 //** Background color for `<body>`.
-$body-bg:               #fff !default;
+$body-bg:               lighten($brand-primary, 53.7%) !default;
 //** Global text color on `<body>`.
 $text-color:            $gray-dark !default;
 
@@ -65,7 +65,7 @@ $font-family-monospace:   Menlo, Monaco, Consolas, "Courier New", monospace !def
 $font-family-base:        $font-family-sans-serif !default;
 $font-family-second:      "Hind", sans-serif;
 
-$font-size-base:          14px !default;
+$font-size-base:          16px !default;
 $font-size-large:         ceil(($font-size-base * 1.25)) !default; // ~18px
 $font-size-small:         ceil(($font-size-base * 0.85)) !default; // ~12px
 
@@ -765,7 +765,7 @@ $panel-danger-heading-bg:     $state-danger-bg !default;
 //** Padding around the thumbnail image
 $thumbnail-padding:           4px !default;
 //** Thumbnail background color
-$thumbnail-bg:                $body-bg !default;
+$thumbnail-bg:                white !default;
 //** Thumbnail border color
 $thumbnail-border:            #ddd !default;
 //** Thumbnail border radius

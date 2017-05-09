@@ -1,17 +1,40 @@
-
-<div class="container">
-    <h1><%= @location.name %></h1>
-    <% @courses.each do |course| %>
-    <div class="jumbotron">
-        <h2><%= link_to course.name, course_path(:id => course.id) %></h2>
-        <p>Prerequisite: <%= course.prerequisite %></p>
-        <p>Category: <% course.categories.each do |category| %>
-            <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
-        <% end %></p>
-        <p>Location: <% course.locations.each do |location| %>
-            <span style="padding-right:25px;"> <%= link_to location.name, courses_path(:id => location.id, :table => "Location") %> </span>
-        <% end %></p>
-        <p>Created: <%= course.created_at %></p>
+<%= render 'shared/error_messages' %>
+<h1 class="margin-bottom-three"><%= @location.name %></h1>
+<% @courses.each_slice(3) do |group| %>
+<div class="row">
+  <% group.each do |course| %>
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+      <div class="caption">
+        <h3 class="thumbnail__header"><%= link_to course.name, course_path(:id => course.id), class: 'thumbnail__link' %></h3>
+        <% if course.prerequisites.present? %>
+          <p><strong>Prerequisite(s):</strong><br>
+            <% names = [] %>
+            <% course.prerequisites.each do |p| %>
+            <% names << p.name %>
+            <% end %>
+            <%= names.join(', ') %>
+          </p>
+        <% end %>
+        <p><strong>Categories(s):</strong><br>
+          <% names = [] %>
+          <% course.categories.each do |p| %>
+          <% names << p.name %>
+          <% end %>
+          <%= names.join(', ') %>
+        </p>
+        <div class="thumbnail__button-panel">
+          <%= link_to like_path(course.id), method: :post, class: 'btn btn-primary' do %>
+            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
+          <% end %>
+          <%= link_to dislike_path(course.id), method: :post, class: 'btn' do %>
+            <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
+          <% end %>
+          <%= Like.where(course_id: course.id).count - Dislike.where(course_id: course.id).count %>
+        </div>
+      </div>
     </div>
-    <% end %>
+  </div>
+  <% end %>
 </div>
+<% end %>
