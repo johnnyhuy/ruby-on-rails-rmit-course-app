@@ -10,6 +10,18 @@
     <%= link_to dislike_path(course.id), method: :post do %>
       <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
     <% end %>
+    <%= link_to edit_course_path(course.id) do %>
+      <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+    <% end %>
+    <% if course.prerequisites.present? %>
+        <p>Prerequisites:
+        <% names = [] %>
+        <% course.prerequisites.each do |p| %>
+            <% names << p.name %>
+        <% end %>
+        <%= names.join(', ') %>
+        </p>
+    <% end %>
     <p>Category: <% course.categories.each do |category| %>
       <span style="padding-right:25px;"> <%= link_to category.name, courses_path(:id => category.id, :table => "Category") %> </span>
     <% end %></p>
