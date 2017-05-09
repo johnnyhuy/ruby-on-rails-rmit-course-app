@@ -4,6 +4,6 @@ class Prerequisite < ApplicationRecord
   # Get the prerequisite name
   # Not to confuse with the course_id name
   def name
-    Course.find_by_id(self.id).name
+    Course.find(self.id).name
   end
 end

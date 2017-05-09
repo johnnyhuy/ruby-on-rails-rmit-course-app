@@ -1,9 +1,9 @@
 class Course < ApplicationRecord
   # Categories
-  has_and_belongs_to_many :categories
+  has_and_belongs_to_many :categories, :dependant => :destroy
 
   # Locations
-  has_and_belongs_to_many :locations
+  has_and_belongs_to_many :locations, :dependant => :destroy
 
   # Prerequisites
   has_many :prerequisites
