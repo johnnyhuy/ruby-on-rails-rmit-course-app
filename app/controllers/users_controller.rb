@@ -2,6 +2,10 @@ class UsersController < ApplicationController
   # Middleware
   before_action :guests_only, only: [:new, :create]
 
+  def edit
+    @user = User.find(params[:id])
+  end
+
   def index
     @users = User.all
   end
@@ -24,8 +28,20 @@ class UsersController < ApplicationController
       redirect_to login_path, flash: { success: 'Successfully registered a coordinator, please login.' }
     else
       render 'new'
-      # redirect_to register_path, flash: { errors: @user.errors.full_messages }
     end
+  end
+
+  def update
+    @user = User.find(params[:id])
+
+    # Get user params
+    user_params = params.require(:user).permit([:firstname, :lastname, :email, :password, :password_confirmation])
+
+    @user.update_attribute(:firstname, user_params[:firstname])
+    @user.update_attribute(:lastname, user_params[:lastname])
+    @user.update_attribute(:email, user_params[:email])
+
+    redirect_to user_path(@user), flash: { success: 'Successfully edited a profile!' }
   end
 
   private
