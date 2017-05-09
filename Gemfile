@@ -48,6 +48,7 @@ gem 'faker', '~> 1.7.3'
 gem 'rails-controller-testing'
 
 # Other
+gem 'carrierwave', '~> 1.0'
 gem "rubycritic", :require => false
 
 group :development, :test do

@@ -5,7 +5,11 @@
  */
 
 body {
+    position: relative;
     background-color: $body-bg !important;
+    min-height: 100%;
+    overflow: auto;
+    padding-bottom: 240px;
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
@@ -22,6 +26,22 @@ button, input[type='submit'] {
 
 input, select, textarea {
     font-family: $font-family-second;
+}
+
+footer {
+    background-color: $gray-dark;
+    padding-top: 10px;
+    color: white;
+    margin-top: 40px;
+        position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    a:hover {
+        text-decoration: none;
+        color: $brand-light;
+    }
 }
 
 /**
@@ -157,6 +177,17 @@ input, select, textarea {
 .thumbnail__link:hover {
     text-decoration: none;
     color: $brand-light;
+}
+
+.block {
+    border: 1px solid $gray-lighter;
+    box-shadow: 0 2px 4px #d2d2d2;
+    padding: 15px;
+}
+
+.profile__avatar {
+    display: block;
+    border-radius: 100%;
 }
 
 /* Extra small devices (phones, less than 768px) */
