@@ -1,7 +1,7 @@
 <%= render 'shared/error_messages' %>
 <h1 class="margin-bottom-three">All Courses</h1>
 <% @courses.each_slice(3) do |group| %>
-<div class="row">
+<div class="row display-flex">
   <% group.each do |course| %>
   <div class="col-sm-6 col-md-4">
     <div class="thumbnail">
@@ -10,7 +10,7 @@
       <% end %>
       <div class="caption">
         <h3 class="thumbnail__header"><%= link_to course.name, course_path(:id => course.id), class: 'thumbnail__link' %></h3>
-        <% if course.prerequisites.present? %>
+        <% if !course.prerequisites.empty? %>
           <p><strong>Prerequisite(s):</strong><br>
             <% names = [] %>
             <% course.prerequisites.each do |p| %>
@@ -34,13 +34,22 @@
           <%= names.join(', ') %>
         </p>
         <div class="thumbnail__button-panel">
-          <%= link_to like_path(course.id), method: :post, class: 'btn btn-primary' do %>
-            <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span> Like
-          <% end %>
-          <%= link_to dislike_path(course.id), method: :post, class: 'btn' do %>
-            <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>
-          <% end %>
-          <%= Like.where(course_id: course.id).count - Dislike.where(course_id: course.id).count %>
+          <div class="pull-left">
+            <%= link_to course_path(course.id), method: :delete, class: 'btn' do %>
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <% end %>
+            <%= link_to edit_course_path(course.id), class: 'btn' do %>
+              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <% end %>
+          </div>
+          <div class="pull-right">
+            <%= link_to dislike_path(course.id), method: :post, class: 'btn' do %>
+              <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>  <%= Dislike.where(course_id: course.id).count %>
+            <% end %>
+            <%= link_to like_path(course.id), method: :post, class: 'btn btn-primary' do %>
+              <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>  <%= Like.where(course_id: course.id).count %>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

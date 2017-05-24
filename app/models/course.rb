@@ -6,7 +6,7 @@ class Course < ApplicationRecord
   has_and_belongs_to_many :locations, :dependant => :destroy
 
   # Prerequisites
-  has_many :prerequisites
+  has_and_belongs_to_many :prerequisites, :dependant => :destroy
 
   # Likes
   has_many :likes

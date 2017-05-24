@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170509053624) do
+ActiveRecord::Schema.define(version: 20170524201918) do
 
   create_table "categories", force: :cascade do |t|
     t.string   "name"
@@ -45,6 +45,13 @@ ActiveRecord::Schema.define(version: 20170509053624) do
     t.index ["location_id"], name: "index_courses_locations_on_location_id"
   end
 
+  create_table "courses_prerequisites", id: false, force: :cascade do |t|
+    t.integer "course_id",       null: false
+    t.integer "prerequisite_id", null: false
+    t.index ["course_id"], name: "index_courses_prerequisites_on_course_id"
+    t.index ["prerequisite_id"], name: "index_courses_prerequisites_on_prerequisite_id"
+  end
+
   create_table "dislikes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "course_id"
@@ -67,11 +74,7 @@ ActiveRecord::Schema.define(version: 20170509053624) do
     t.index ["name"], name: "index_locations_on_name", unique: true
   end
 
-  create_table "prerequisites", id: false, force: :cascade do |t|
-    t.integer "id"
-    t.integer "course_id"
-    t.index ["course_id"], name: "index_prerequisites_on_course_id"
-    t.index ["id"], name: "index_prerequisites_on_id"
+  create_table "prerequisites", force: :cascade do |t|
   end
 
   create_table "users", force: :cascade do |t|

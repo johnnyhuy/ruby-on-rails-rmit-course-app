@@ -1,6 +1,12 @@
 class UsersController < ApplicationController
   # Middleware
   before_action :guests_only, only: [:new, :create]
+  before_action :admin_only, only: [:destroy]
+
+  def destroy
+    user = User.find(params[:id]).destroy
+    flash_success("Successfully deleted #{user.full_name} user!", users_path)
+  end
 
   def edit
     @user = User.find(params[:id])

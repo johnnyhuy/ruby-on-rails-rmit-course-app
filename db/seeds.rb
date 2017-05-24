@@ -54,9 +54,12 @@ industExp.categories << softEng
 softEngPrin.categories << softEng
 
 # Prerequisites
-progTechniques.prerequisites.create(id: progFundamentals.id, course_id: progTechniques.id)
-webProgramming.prerequisites.create(id: progFundamentals.id, course_id: webProgramming.id)
-compTheory.prerequisites.create(id: discrete.id, course_id: compTheory.id)
+prereqOne = Prerequisite.create(id: progFundamentals.id)
+prereqThree = Prerequisite.create(id: discrete.id)
+
+progTechniques.prerequisites << prereqOne
+webProgramming.prerequisites << prereqOne
+compTheory.prerequisites << prereqThree
 
 # Create locations
 locationOne = Location.create(name: '080.04.006')

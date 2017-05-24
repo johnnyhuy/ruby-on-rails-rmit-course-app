@@ -51,6 +51,15 @@ html {
     height: 100%;
 }
 
+.row.display-flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.row.display-flex > [class*='col-'] {
+  display: flex;
+  flex-direction: column;
+}
+
 /**
  *
  * Lead
@@ -188,7 +197,7 @@ html {
 }
 
 .thumbnail {
-    min-height: 200px;
+    height: 100%;
     position: relative;
     border: 1px solid $gray-lighter;
     box-shadow: 0 2px 4px #d2d2d2;
@@ -196,9 +205,10 @@ html {
 
 .thumbnail__button-panel {
     position: absolute;
-    bottom: 10px;
-    left: 10px;
+    bottom: 0px;
+    left: 0px;
     width: 100%;
+    padding: 10px;
 }
 
 .thumbnail__header {

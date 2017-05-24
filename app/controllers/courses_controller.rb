@@ -3,6 +3,7 @@ class CoursesController < ApplicationController
 
   # Middleware
   before_action :logged_users_only, except: [:index, :show]
+  before_action :admin_only, only: [:destroy]
 
   def create
     @locations = Location.all
@@ -30,33 +31,48 @@ class CoursesController < ApplicationController
     # Add custom errors after call
     # Disabled Prerequisite since it can be optional
     # course.errors.add(:base, "Prerequisite can't be blank") if course_params[:prerequisites].empty?
-    @course.errors.add(:base, "Location can't be blank") if course_params[:locations].empty?
-    @course.errors.add(:base, "Category can't be blank") if course_params[:categories].empty?
+    @course.errors.add(:base, "Location cannot be blank") if course_params[:locations].empty?
+    @course.errors.add(:base, "Category cannot be blank") if course_params[:categories].empty?
+
+    # New location
+    begin
+    course_params[:locations].each do |l|
+      @course.locations << Location.find(l)
+    end
+    rescue ActiveRecord::RecordNotFound
+      @course.errors.add(:base, "Location ${l} does not exist")
+    end
+
+    # New category
+    begin
+    course_params[:categories].each do |c|
+      @course.categories << Category.find(c)
+    end
+    rescue ActiveRecord::RecordNotFound
+      @course.errors.add(:base, "Category ${l} does not exist")
+    end
+
+    # Create prerequisites
+    course_params[:prerequisites].each do |p|
+      prereq = Prerequisite.where(id: p).first_or_create
+      @course.prerequisites << prereq
+    end
 
     # Save course
     if @course.errors.any?
       render 'new'
     else
-      # New location
-      course_params[:locations].each do |l|
-        @course.locations << Location.find(l)
-      end
-
-      # New category
-      course_params[:categories].each do |c|
-        @course.categories << Category.find(c)
-      end
-
       # Save course
       @course.save
 
-      # Create prerequisites
-      course_params[:prerequisites].each do |p|
-        Prerequisite.create(id: p, course_id: @course.id)
-      end
-
-      redirect_to courses_path, flash: { success: "Successfully created #{@course.name} course!" }
+      flash_success("Successfully created #{@course.name} course!", courses_path)
     end
+  end
+
+  def destroy
+    # Delete course
+    course = Course.find(params[:id]).destroy
+    flash_success("Successfully deleted #{course.name} course!", courses_path)
   end
 
   def edit

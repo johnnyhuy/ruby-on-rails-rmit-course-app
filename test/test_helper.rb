@@ -12,14 +12,22 @@ class ActiveSupport::TestCase
     !session[:user_id].nil?
   end
 
+  # Check if admin is logged in via session
+  def logged_in_admin?
+    !session[:admin].nil?
+  end
 
   # Login as a user
   def login_as(user)
     session[:user_id] = user.id
   end
 
+  # Login as a admin
+  def login_as_admin
+    session[:admin] = true
+  end
+
   # Add more helper methods to be used by all tests here...
-  include SessionsHelper
 end
 
 class ActionDispatch::IntegrationTest
@@ -30,6 +38,16 @@ class ActionDispatch::IntegrationTest
         email: user.email,
         password: user.password,
         remember_me: remember_me
+      }
+    }
+  end
+
+  # Login as a admin
+  def login_as_admin
+    post login_path, params: {
+      session: {
+        email: 'admin',
+        password: 'password',
       }
     }
   end
