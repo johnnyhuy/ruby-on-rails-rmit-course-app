@@ -37,11 +37,17 @@ class UsersController < ApplicationController
     # Get user params
     user_params = params.require(:user).permit([:firstname, :lastname, :email, :password, :password_confirmation])
 
-    @user.update_attribute(:firstname, user_params[:firstname])
-    @user.update_attribute(:lastname, user_params[:lastname])
-    @user.update_attribute(:email, user_params[:email])
+    @user.assign_attributes(user_params)
 
-    redirect_to user_path(@user), flash: { success: 'Successfully edited a profile!' }
+    if @user.save
+      @user.update_attribute(:firstname, user_params[:firstname])
+      @user.update_attribute(:lastname, user_params[:lastname])
+      @user.update_attribute(:email, user_params[:email])
+
+      redirect_to user_path(@user), flash: { success: 'Successfully edited a profile!' }
+    else
+      render 'edit'
+    end
   end
 
   private
