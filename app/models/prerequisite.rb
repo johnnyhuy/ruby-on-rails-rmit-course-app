@@ -1,5 +1,5 @@
 class Prerequisite < ApplicationRecord
-  belongs_to :course
+  has_and_belongs_to_many :courses
 
   # Get the prerequisite name
   # Not to confuse with the course_id name

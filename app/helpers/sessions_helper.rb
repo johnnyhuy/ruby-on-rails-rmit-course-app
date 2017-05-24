@@ -5,6 +5,15 @@ module SessionsHelper
     session[:user_id] = user.id
   end
 
+  # Set session admin
+  def login_admin(email, password)
+    if email == 'admin' && password == 'password'
+      session[:admin] = true
+      flash_success('Successfully logged in as an administrator.')
+      return true
+    end
+  end
+
   def remember(user)
     # Remember selected user
     user.remember
@@ -26,11 +35,14 @@ module SessionsHelper
   def logout
     forget current_user
     session.delete(:user_id)
+    session.delete(:admin) if is_admin?
     @current_user = nil
   end
 
   # Returns the current logged-in user (if any).
   def current_user
+    return @current_user = get_admin if is_admin?
+
     if user_id = session[:user_id]
       # Find by session user ID
       @current_user ||= User.find_by(id: user_id)
@@ -47,6 +59,23 @@ module SessionsHelper
     end
   end
 
+  # Check if an admin exists
+  def get_admin
+    admin = User.find_by(email: 'admin')
+
+    if !admin
+      # Create dummay data for admin
+      new_admin = User.new(firstname: 'Administrator', lastname: 'RMIT', password: nil, email: 'admin')
+      new_admin.save(validate: false)
+    end
+
+    return admin
+  end
+
+  def is_admin?
+    !session[:admin].nil?
+  end
+
   # Returns true if the user is logged in, false otherwise.
   def logged_in?
     !current_user.nil?
@@ -54,11 +83,19 @@ module SessionsHelper
 
   # Redirect to login if not logged in
   def logged_users_only
-    redirect_to login_path if !logged_in?
+    message = 'Logged in users are only allowed to do that action. Redirecting to login page, sorry for the inconvenience.'
+    flash_danger(message, login_path) if !logged_in?
   end
 
   # Redirect to root if logged in
   def guests_only
-    redirect_to root_path if logged_in?
+    message = 'Guests are only allowed to do that action. Redirecting to hompage, sorry for the inconvenience.'
+    flash_danger(message, root_path) if logged_in?
+  end
+
+  # Redirect if not admin
+  def admin_only
+    message = 'Admins are only allowed to do that action. Redirecting to hompage, sorry for the inconvenience.'
+    flash_danger(message, root_path) if !is_admin?
   end
 end

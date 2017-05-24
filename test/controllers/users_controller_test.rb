@@ -12,6 +12,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     )
   end
 
+  test 'delete user successful' do
+    login_as_admin
+
+    # Delete course
+    delete user_path(@user.id)
+
+    # User should not exist
+    assert_not User.exists?(id: @user.id)
+  end
+
   test 'should get register page' do
     get register_url
     assert_response :success
