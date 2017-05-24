@@ -31,17 +31,24 @@ input, select, textarea {
 footer {
     background-color: $gray-dark;
     padding-top: 10px;
-    color: white;
     margin-top: 40px;
         position: absolute;
     right: 0;
     bottom: 0;
     left: 0;
 
+    h3 {
+        color: white;
+    }
+
     a:hover {
         text-decoration: none;
         color: $brand-light;
     }
+}
+
+html {
+    height: 100%;
 }
 
 /**
@@ -62,6 +69,30 @@ footer {
 
 .jumbotron {
     margin-top: $nav-height - 40px;
+}
+
+.error {
+    text-align: center;
+    margin-top: $margin-three;
+    margin-bottom: $margin-three;
+
+    @include e('heading') {
+        margin-top: 0;
+        font-size: 64px;
+        margin-bottom: $margin-one;
+    }
+
+    @include e('message') {
+        margin-bottom: 0;
+        font-size: 18px;
+        color: $gray;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    @include e('icon') {
+        font-size: 124px;
+    }
 }
 
 /**
