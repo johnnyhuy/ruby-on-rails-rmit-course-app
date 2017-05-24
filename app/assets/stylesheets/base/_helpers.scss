@@ -56,6 +56,14 @@
     right: 0;
 }
 
+.float-right {
+    float: right;
+}
+
+.float-left {
+    float: left;
+}
+
 // Margins
 .margin-top-none    { margin-top: 0; }
 .margin-top-quarter { margin-top: $base-space-unit / 4; }
@@ -113,3 +121,4 @@
 .padding-right-one     { padding-right: $base-space-unit; }
 .padding-right-two     { padding-right: $base-space-unit * 2; }
 .padding-right-three     { padding-right: $base-space-unit * 3; }
+

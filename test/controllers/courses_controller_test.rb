@@ -56,6 +56,20 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_equal request.path_info, courses_path
   end
 
+  test 'delete course successful' do
+    # Login as user
+    login_as @user
+
+    # Create course
+    @new_course.save(validate: false)
+
+    # Delete course
+    delete course_path(@new_course.id)
+
+    # Course should not exist
+    assert_not Course.exists?(id: @new_course.id)
+  end
+
   test 'course location does not exist' do
     # Login as user
     login_as @user
