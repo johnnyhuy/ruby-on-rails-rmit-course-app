@@ -1,8 +1,9 @@
 class UsersController < ApplicationController
+  include SessionsHelper
+
   # Middleware
   before_action :guests_only, only: [:new, :create]
   before_action :admin_only, only: [:destroy]
-  before_action :not_admin, only: [:edit]
 
   def destroy
     user = User.find(params[:id]).destroy
@@ -11,6 +12,9 @@ class UsersController < ApplicationController
 
   def edit
     @user = User.find(params[:id])
+
+    # Make sure standard users cannot edit other users
+    return admin_only if (@user.id != current_user.id)
   end
 
   def index
@@ -23,6 +27,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @courses = Course.where(user_id: params[:id])
+    @votes = @user.upvotes + @user.downvotes
+    @votes.sort_by! { |h| h[:updated_at] }.reverse!
   end
 
   def create
@@ -40,6 +47,9 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+
+    # Make sure standard users cannot edit other users
+    return admin_only if (@user.id != current_user.id)
 
     # Get user params
     user_params = params.require(:user).permit([:firstname, :lastname, :email, :password, :password_confirmation])

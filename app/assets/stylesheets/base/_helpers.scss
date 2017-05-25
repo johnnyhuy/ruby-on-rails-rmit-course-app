@@ -14,7 +14,7 @@
 .green { color: green; }
 .blue { color: blue; }
 .black { color: black; }
-.white { color: black; }
+.white { color: white; }
 .yellow { color: yellow; }
 
 // Wrap
@@ -103,6 +103,13 @@
 .margin-right-three     { margin-right: $base-space-unit * 3; }
 
 // Padding
+.padding-none    { padding: 0; }
+.padding-quarter { padding: $base-space-unit / 4; }
+.padding-half    { padding: $base-space-unit / 2; }
+.padding-one     { padding: $base-space-unit; }
+.padding-two     { padding: $base-space-unit * 2; }
+.padding-three     { padding: $base-space-unit * 3; }
+
 .padding-top-none    { padding-top: 0; }
 .padding-top-quarter { padding-top: $base-space-unit / 4; }
 .padding-top-half    { padding-top: $base-space-unit / 2; }

@@ -67,9 +67,6 @@ class CoursesController < ApplicationController
     # Replace id strings to collection
     replace_id_collection
 
-    # Assign user to params
-    assign_to_course_params(user_id: current_user.id)
-
     @course.assign_attributes(@course_params)
 
     # Save course

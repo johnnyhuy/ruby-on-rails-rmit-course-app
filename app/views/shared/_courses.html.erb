@@ -8,9 +8,6 @@
         <% end %>
         <div class="caption">
           <h3 class="thumbnail__header"><%= link_to course.name, course_path(:id => course.id), class: 'thumbnail__link' %></h3>
-          <% if course.user.present? %>
-            <p><strong>Created by: <%= link_to course.user.full_name, user_path(course.user) %></strong><br>
-          <% end %>
           <p class="bold">Updated: <%= elapsed_time(course.created_at) %> ago</p>
           <% if course.prerequisites.present? %>
             <p><strong>Prerequisites:</strong><br>

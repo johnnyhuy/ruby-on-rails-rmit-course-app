@@ -80,7 +80,7 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     location_params[:name] = '002.02.002'
 
     # Post params
-    put category_path(@location.id), params: { category: location_params }
+    put location_path(@location.id), params: { location: location_params }
 
     # Follow redirect
     follow_redirect!
@@ -89,6 +89,6 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
     assert flash[:success].present?
 
     # Should redirect login
-    assert_equal request.path_info, categories_path
+    assert_equal request.path_info, locations_path
   end
 end
