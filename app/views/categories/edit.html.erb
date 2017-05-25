@@ -1,0 +1,13 @@
+<% provide(:title, "Edit Category - ") %>
+<h1>Edit <%= @category.name %> category</h1>
+<p class="lead">Enter a name to for a category.</p>
+<div class="form">
+    <%= form_for @category, url: category_path(@category.id) do |f| %>
+        <%= render 'shared/collection_error_messages', collection: @category %>
+        <div class="form-group">
+          <%= f.label :name %>
+          <%= f.text_field :name, class: 'form-control', placeholder: 'Category Name' %>
+        </div>
+        <%= f.submit class: 'btn btn-primary btn-primary--wide' %>
+    <% end %>
+</div>

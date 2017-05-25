@@ -1,24 +1,11 @@
-# README
+# Rapid Application Development Assignment Two
+Major group assignment for COSC2675 Rapid Application Development at RMIT University.
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* **Johnny Huynh** - S3604367
+* **Neil D'Souza** - S3600251
 
-Things you may want to cover:
+# Practical Class
+**2.30 pm - 4.30 pm** - 056.04.082
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Development Environment
+To allow actual development on the project code. You must require a development environment for Ruby on Rails (Ruby Framework) to function properly on your local device.
