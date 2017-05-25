@@ -10,6 +10,19 @@
  * files in this directory. Styles in this file should be added after the last require_* statement.
  * It is generally better to create a new file per style scope.
  *
- *= require_tree .
- *= require_self
  */
+
+// Base
+@import "base/variables";
+@import "base/mixins";
+@import "base/reset";
+@import "base/helpers";
+
+// Bootstrap Framework
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import "bootstrap-select";
+
+// Layout
+@import "bootstrap/theme";
+
