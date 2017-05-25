@@ -11,8 +11,11 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
       password_confirmation: 'Password123'
     )
 
-    # Use a fixture for category
+    # Fixtures
     @category = categories(:web)
+    @course = courses(:web)
+
+    @course.categories << @category
   end
 
   test "guest should not create categories" do
@@ -50,5 +53,41 @@ class CategoriesControllerTest < ActionDispatch::IntegrationTest
 
     # Should have no redirection
     assert_response :success
+  end
+
+  test 'delete category successful' do
+    # Login as admin
+    login_as_admin
+
+    # Delete category
+    delete category_path(@category.id)
+
+    # Category should not exist
+    assert_not Category.exists?(id: @category.id)
+
+    # The first assigned category should not exist
+    assert @course.categories.first.blank?
+  end
+
+  test 'update category successful' do
+    # Login as user
+    login_as @user
+
+    # Build params
+    category_params = {}
+    category_params[:id] = @category.id
+    category_params[:name] = 'test'
+
+    # Post params
+    put category_path(@category.id), params: { category: category_params }
+
+    # Follow redirect
+    follow_redirect!
+
+    # Show success message
+    assert flash[:success].present?
+
+    # Should redirect login
+    assert_equal request.path_info, categories_path
   end
 end

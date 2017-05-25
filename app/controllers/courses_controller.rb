@@ -3,96 +3,51 @@ class CoursesController < ApplicationController
 
   # Middleware
   before_action :logged_users_only, except: [:index, :show]
-  before_action :admin_only, only: [:destroy]
+  before_action :admin_only, only: [:destroy, :reset_votes]
 
   def create
-    @locations = Location.all
-    @categories = Category.all
-    @prerequisites = Prerequisite.all
-    @courses = Course.all
+    @course_params = params.require(:course).permit([:name, :description, :image, :prerequisites => [], :locations => [], :categories => []])
 
-    # Get course params
-    course_params = params.require(:course).permit([:name, :description, :image])
+    # Clean empty strings in params array
+    clean_params
+
+    # Replace id strings to collection
+    replace_id_collection
+
+    # Assign user to params
+    assign_to_course_params(user_id: current_user.id)
 
     # New course
-    @course = Course.new(course_params)
+    @course = Course.new(@course_params)
 
-    # Validate collection first
-    @course.valid?
-
-    # Get course params
-    course_params = params.require(:course).permit([:name, :description, :prerequisites => [], :locations => [], :categories => []])
-
-    # Clean array if it contains an empty string
-    course_params.each do |k, v|
-      course_params[k].clean_empty if course_params[k].kind_of?(Array)
-    end
-
-    # Add custom errors after call
-    # Disabled Prerequisite since it can be optional
-    # course.errors.add(:base, "Prerequisite can't be blank") if course_params[:prerequisites].empty?
-    @course.errors.add(:base, "Location cannot be blank") if course_params[:locations].empty?
-    @course.errors.add(:base, "Category cannot be blank") if course_params[:categories].empty?
-
-    # New location
-    begin
-    course_params[:locations].each do |l|
-      @course.locations << Location.find(l)
-    end
-    rescue ActiveRecord::RecordNotFound
-      @course.errors.add(:base, "Location ${l} does not exist")
-    end
-
-    # New category
-    begin
-    course_params[:categories].each do |c|
-      @course.categories << Category.find(c)
-    end
-    rescue ActiveRecord::RecordNotFound
-      @course.errors.add(:base, "Category ${l} does not exist")
-    end
-
-    # Create prerequisites
-    course_params[:prerequisites].each do |p|
-      prereq = Prerequisite.where(id: p).first_or_create
-      @course.prerequisites << prereq
-    end
-
-    # Save course
-    if @course.errors.any?
-      render 'new'
-    else
-      # Save course
+    if !@course.errors.any? && @course.valid?
       @course.save
-
       flash_success("Successfully created #{@course.name} course!", courses_path)
+    else
+      render 'new'
     end
   end
 
   def destroy
     # Delete course
-    course = Course.find(params[:id]).destroy
+    course = Course.find(params[:id])
+    course.destroy
+
+    # Delete all prereq
+    Prerequisite.where(id: params[:id]).destroy_all
+
     flash_success("Successfully deleted #{course.name} course!", courses_path)
   end
 
   def edit
     @course = Course.find(params[:id])
     @courses = Course.where.not(id: params[:id])
-    @prerequisites = Prerequisite.all
-    @locations = Location.all
-    @categories = Category.all
   end
 
   def index
-    @courses = Course.all
   end
 
   def new
-    @courses = Course.all
-    @course = Course.new
-    @prerequisites = Prerequisite.all
-    @locations = Location.all
-    @categories = Category.all
   end
 
   def show
@@ -100,127 +55,49 @@ class CoursesController < ApplicationController
   end
 
   def update
-    @courses = Course.where.not(id: params[:id])
-    @course = Course.find(params[:id])
-    @prerequisites = Prerequisite.all
-    @locations = Location.all
-    @categories = Category.all
-
     # Get course params
-    course_params = params.require(:course).permit([:name, :description, :prerequisites => [], :locations => [], :categories => []])
+    @course_params = params.require(:course).permit([:name, :description, :image, :prerequisites => [], :locations => [], :categories => []])
 
-    # Clean array if it contains an empty string
-    course_params.each do |k, v|
-      course_params[k].clean_empty if course_params[k].kind_of?(Array)
-    end
+    # New course
+    @course = Course.where(id: params[:id]).first
 
-    @course.name = course_params[:name]
-    @course.description = course_params[:description]
+    # Clean empty strings in params array
+    clean_params
 
-    # Validate collection first
-    @course.valid?
+    # Replace id strings to collection
+    replace_id_collection
 
-    # Add custom errors after call
-    # Disabled Prerequisite since it can be optional
-    # course.errors.add(:base, "Prerequisite can't be blank") if course_params[:prerequisites].empty?
-    @course.errors.add(:base, "Location can't be blank") if course_params[:locations].empty?
-    @course.errors.add(:base, "Category can't be blank") if course_params[:categories].empty?
+    # Assign user to params
+    assign_to_course_params(user_id: current_user.id)
+
+    @course.assign_attributes(@course_params)
 
     # Save course
-    if @course.errors.any?
-      render 'edit'
+    if !@course.errors.any? && @course.valid?
+      @course.save
+      flash_success("Successfully updated #{@course.name} course!", courses_path)
     else
-      # Update course details
-      @course.update_attribute(:name, course_params[:name])
-      @course.update_attribute(:description, course_params[:description])
-
-      # Delete previous prerequisites
-      @course.prerequisites.delete_all
-
-      # Create prerequisites
-      course_params[:prerequisites].each do |p|
-        Prerequisite.create(id: p, course_id: @course.id)
-      end
-
-      # Delete previous locations
-      @course.locations.delete @course.locations
-
-      # New location
-      course_params[:locations].each do |l|
-        @course.locations << Location.find(l)
-      end
-
-      # Delete previous categories
-      @course.categories.delete @course.categories
-
-      # New category
-      course_params[:categories].each do |c|
-        @course.categories << Category.find(c)
-      end
-
-      redirect_to courses_path, flash: { success: "Successfully updated #{@course.name} course!" }
+      render 'edit'
     end
   end
 
-  private
-    def validate(course)
-      # Get external params from course
-      external_params = params.require(:course).permit([:prerequisites => [], :locations => [], :categories => []])
+  def reset_votes
+    course = Course.find(params[:id])
 
-      # Clean array if it contains an empty string
-      external_params.each do |k, v|
-        external_params[k].clean_empty
+    if (course.upvotes.present? || course.downvotes.present?)
+      # Delete associated upvotes
+      course.upvotes.each do |u|
+        u.destroy
       end
 
-      # Validate collection first
-      course.valid?
-
-      # Add custom errors after call
-      # Disabled Prerequisite since it can be optional
-      # course.errors.add(:base, "Prerequisite can't be blank") if external_params[:prerequisites].empty?
-      course.errors.add(:base, "Location can't be blank") if external_params[:locations].empty?
-      course.errors.add(:base, "Category can't be blank") if external_params[:categories].empty?
-
-      # Save course
-      if course.errors.any?
-        false
-      else
-        # New prerequisite
-        external_params[:prerequisites].each do |p|
-          # Check if location exists
-          if !Course.exists?(id: p)
-            # Make sure to render and return
-            course.errors.add(:base, "Prerequisite does not exist")
-            render 'new'
-            return
-          end
-        end
-
-        # New location
-        external_params[:locations].each do |l|
-          # Check if location exists
-          if Location.exists?(id: l)
-            course.locations << Location.find_by_id(l)
-          else
-            # Make sure to render and return
-            course.errors.add(:base, "Location does not exist")
-            render 'new'
-            return
-          end
-        end
-
-        # New category
-        external_params[:categories].each do |c|
-          # Check if category exists
-          if Category.exists?(id: c)
-            course.categories << Category.find_by_id(c)
-          else
-            # Make sure to render and return
-            course.errors.add(:base, "Category does not exist")
-            render 'new'
-            return
-          end
-        end
+      # Delete associated downvotes
+      course.downvotes.each do |d|
+        d.destroy
       end
+
+      flash_success("Successfully reset all votes on #{course.name} course!", courses_path)
+    else
+      flash_danger("There are no votes to reset #{course.name} course.", courses_path)
     end
+  end
 end

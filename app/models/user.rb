@@ -3,8 +3,13 @@ class User < ApplicationRecord
   attr_accessor :remember_token
 
   # Association Macros
-  has_many :likes
-  has_many :courses, through: :likes
+  has_many :upvotes
+  has_many :courses, through: :upvotes
+
+  has_many :downvotes
+  has_many :courses, through: :downvotes
+
+  has_many :courses
 
   # Validation rules
 
