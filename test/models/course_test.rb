@@ -2,10 +2,19 @@ require 'test_helper'
 
 class CourseTest < ActiveSupport::TestCase
   def setup
-    # New Course
+    @location = Location.create(
+      name: '000.00.000'
+    )
+
+    @category = Category.create(
+      name: 'Test Category'
+    )
+
     @course = Course.new(
       name: 'Example Course',
       description: 'Example description' * 30,
+      locations: [@location],
+      categories: [@category]
     )
   end
 

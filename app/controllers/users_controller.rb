@@ -2,6 +2,7 @@ class UsersController < ApplicationController
   # Middleware
   before_action :guests_only, only: [:new, :create]
   before_action :admin_only, only: [:destroy]
+  before_action :not_admin, only: [:edit]
 
   def destroy
     user = User.find(params[:id]).destroy
@@ -46,11 +47,7 @@ class UsersController < ApplicationController
     @user.assign_attributes(user_params)
 
     if @user.save
-      @user.update_attribute(:firstname, user_params[:firstname])
-      @user.update_attribute(:lastname, user_params[:lastname])
-      @user.update_attribute(:email, user_params[:email])
-
-      redirect_to user_path(@user), flash: { success: 'Successfully edited a profile!' }
+      redirect_to user_path(@user), flash: { success: 'Successfully updated profile!' }
     else
       render 'edit'
     end

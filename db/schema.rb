@@ -52,14 +52,7 @@ ActiveRecord::Schema.define(version: 20170524201918) do
     t.index ["prerequisite_id"], name: "index_courses_prerequisites_on_prerequisite_id"
   end
 
-  create_table "dislikes", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "course_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
-  create_table "likes", force: :cascade do |t|
+  create_table "downvotes", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "course_id"
     t.datetime "created_at", null: false
@@ -75,6 +68,13 @@ ActiveRecord::Schema.define(version: 20170524201918) do
   end
 
   create_table "prerequisites", force: :cascade do |t|
+  end
+
+  create_table "upvotes", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "course_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "users", force: :cascade do |t|

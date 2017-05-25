@@ -7,7 +7,19 @@ class ApplicationController < ActionController::Base
   before_action :populate
 
   def populate
+    # Location
     @locations = Location.all
+    @location = Location.new
+
+    # Cateogry
     @categories = Category.all
+    @category = Category.new
+
+    # Course
+    @courses = Course.all
+    @course = Course.new
+
+    # Prereq
+    @prerequisites = Prerequisite.all
   end
 end

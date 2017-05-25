@@ -98,4 +98,10 @@ module SessionsHelper
     message = 'Admins are only allowed to do that action. Redirecting to hompage, sorry for the inconvenience.'
     flash_danger(message, root_path) if !is_admin?
   end
+
+  # Redirect if not admin
+  def not_admin
+    message = 'Normal users are only allowed to do that action. Redirecting to hompage, sorry for the inconvenience.'
+    flash_danger(message, root_path) if is_admin?
+  end
 end

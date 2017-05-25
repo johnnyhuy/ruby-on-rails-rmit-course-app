@@ -13,6 +13,10 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
     # Use a fixture for location
     @location = locations(:locationOne)
+    @course = courses(:web)
+
+    # Add location to course categories
+    @course.locations << @location
   end
 
   test "guest should not create locations" do
@@ -50,5 +54,41 @@ class LocationsControllerTest < ActionDispatch::IntegrationTest
 
     # Should have no redirection
     assert_response :success
+  end
+
+  test 'delete location successful' do
+    # Login as admin
+    login_as_admin
+
+    # Delete location
+    delete location_path(@location.id)
+
+    # location should not exist
+    assert_not Location.exists?(id: @location.id)
+
+    # The first assigned location should not exist
+    assert @course.locations.first.blank?
+  end
+
+  test 'update location successful' do
+    # Login as user
+    login_as @user
+
+    # Build params
+    location_params = {}
+    location_params[:id] = @location.id
+    location_params[:name] = '002.02.002'
+
+    # Post params
+    put category_path(@location.id), params: { category: location_params }
+
+    # Follow redirect
+    follow_redirect!
+
+    # Show success message
+    assert flash[:success].present?
+
+    # Should redirect login
+    assert_equal request.path_info, categories_path
   end
 end

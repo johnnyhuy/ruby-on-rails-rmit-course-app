@@ -37,6 +37,8 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     # Use a fixture for course
     @course = courses(:web)
+
+    @diff_user = users(:john)
   end
 
   test 'create course successful' do
@@ -56,48 +58,34 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
     assert_equal request.path_info, courses_path
   end
 
-  test 'delete course successful' do
+  test 'update course successful' do
     # Login as user
     login_as @user
 
-    # Create course
-    @new_course.save(validate: false)
+    @course_params[:id] = @course.id
+
+    # Post params
+    put course_path(@course.id), params: {course: @course_params}
+
+    # Follow redirect
+    follow_redirect!
+
+    # Show success message
+    assert flash[:success].present?
+
+    # Should redirect login
+    assert_equal request.path_info, courses_path
+  end
+
+  test 'delete course successful' do
+    # Login as admin
+    login_as_admin
 
     # Delete course
-    delete course_path(@new_course.id)
+    delete course_path(@course.id)
 
     # Course should not exist
-    assert_not Course.exists?(id: @new_course.id)
-  end
-
-  test 'course location does not exist' do
-    # Login as user
-    login_as @user
-
-    # Location ID does not exist
-    # Have an existing one in the array and vice versa
-    @course_params[:locations] = [@location.id, 1337]
-
-    # Post params
-    post courses_path, params: {course: @course_params}
-
-    # See if render is called
-    assert_template 'courses/new'
-  end
-
-  test 'course category does not exist' do
-    # Login as user
-    login_as @user
-
-    # Location ID does not exist
-    # Have an existing one in the array and vice versa
-    @course_params[:categories] = [@category, 1337]
-
-    # Post params
-    post courses_path, params: {course: @course_params}
-
-    # See if render is called
-    assert_template 'courses/new'
+    assert_not Course.exists?(id: @course.id)
   end
 
   test 'should get new course and show title' do
@@ -166,5 +154,17 @@ class CoursesControllerTest < ActionDispatch::IntegrationTest
 
     # Should have no redirection
     assert_response :success
+  end
+
+  test 'reset votes successfully' do
+    login_as_admin
+
+    upvote = Upvote.create(course_id: @course.id, user_id: @user.id)
+    downvote = Downvote.create(course_id: @course.id, user_id: @diff_user.id)
+
+    delete reset_votes_path(@course.id)
+
+    assert_not Upvote.exists?(id: upvote.id)
+    assert_not Downvote.exists?(id: upvote.id)
   end
 end
