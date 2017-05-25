@@ -40,6 +40,9 @@ class ActionDispatch::IntegrationTest
         remember_me: remember_me
       }
     }
+
+    # Follow redirect
+    follow_redirect!
   end
 
   # Login as a admin
@@ -50,5 +53,8 @@ class ActionDispatch::IntegrationTest
         password: 'password',
       }
     }
+
+    # Follow redirect
+    follow_redirect!
   end
 end

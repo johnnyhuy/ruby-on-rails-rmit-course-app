@@ -1,23 +1,27 @@
 class Course < ApplicationRecord
   # Categories
-  has_and_belongs_to_many :categories, :dependant => :destroy
+  has_and_belongs_to_many :categories, dependent: :destroy
 
   # Locations
-  has_and_belongs_to_many :locations, :dependant => :destroy
+  has_and_belongs_to_many :locations, dependent: :destroy
 
   # Prerequisites
-  has_and_belongs_to_many :prerequisites, :dependant => :destroy
+  has_and_belongs_to_many :prerequisites, dependent: :destroy
 
-  # Likes
-  has_many :likes
-  has_many :users, through: :likes
+  # Upvotes
+  has_many :upvotes, dependent: :destroy
 
-  # Dislikes
-  has_many :dislikes
-  has_many :users, through: :dislikes
+  # Downvotes
+  has_many :downvotes, dependent: :destroy
+
+  belongs_to :user
 
   mount_uploader :image, CourseUploader
 
+  validates :categories,
+    presence: true
+  validates :locations,
+    presence: true
   validates :name,
     presence: true,
     length: {

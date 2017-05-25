@@ -1,8 +1,8 @@
-<% provide(:title, "New Category - ") %>
-<h1>Create a new category</h1>
-<p class="lead">Enter the name for a new category, example format Web Development.</p>
+<% provide(:title, "Edit Category - ") %>
+<h1>Edit <%= @category.name %> category</h1>
+<p class="lead">Enter a name to for a category.</p>
 <div class="form">
-    <%= form_for @category do |f| %>
+    <%= form_for @category, url: category_path(@category.id) do |f| %>
         <%= render 'shared/collection_error_messages', collection: @category %>
         <div class="form-group">
           <%= f.label :name %>

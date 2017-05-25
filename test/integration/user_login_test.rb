@@ -50,9 +50,6 @@ class UserLoginTest < ActionDispatch::IntegrationTest
     # Success message should exist
     assert flash[:success].present?
 
-    # Follow
-    follow_redirect!
-
     # Redirect page should by home page
     assert_equal request.path_info, root_path
 

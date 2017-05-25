@@ -5,8 +5,8 @@ Rails.application.routes.draw do
   post   'login',    to: 'sessions#create'
   delete 'logout',   to: 'sessions#destroy'
 
-  post   'courses/:id/like',     to: 'likes#new', as: 'like'
-  post   'courses/:id/dislike',  to: 'dislikes#new', as: 'dislike'
+  post   'courses/:id/upvote',     to: 'upvotes#new', as: 'upvote'
+  post   'courses/:id/downvote',  to: 'downvotes#new', as: 'downvote'
 
   # Resourceful routes
   # Follows the RESTful API
@@ -14,6 +14,8 @@ Rails.application.routes.draw do
   resources :locations
   resources :courses
   resources :users, except: [:new]
+
+  delete 'courses/:id/votes', to: 'courses#reset_votes', as: 'reset_votes'
 
   # Root home template
   root 'home#index'
