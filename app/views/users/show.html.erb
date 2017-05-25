@@ -1,14 +1,75 @@
 <%= render 'shared/flash_messages' %>
 <div class="row">
-  <div class="col-xs-6 col-md-4">
-    <div class="block profile">
+  <div class="col-xs-6 col-md-4 profile">
         <%= image_tag gravatar_url(@user), class: 'profile__avatar' %>
-        <%= @user.full_name + ', ' + @user.email %>
+    <div class="block">
+        <h3 class="profile__name margin-top-none"><%= @user.full_name %></h3>
+        <p class="profile__email"><%= @user.email %></p>
+        <p><strong>Date Created:</strong> <%= @user.created_at.strftime("%d/%m/%Y") %></p>
+        <p><strong>Last Updated:</strong> <%= elapsed_time(@user.updated_at) %> ago</p>
+        <div class="button-panel">
+          <div class="pull-right">
+            <%= link_to user_path(@user), method: :delete, class: 'btn', title: "Remove #{@user.full_name}" do %>
+              <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+            <% end %>
+            <%= link_to edit_user_path(@user), class: 'btn', title: "Edit #{@user.full_name}" do %>
+             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <% end %>
+          </div>
+          <div class="clearfix"></div>
+        </div>
     </div>
   </div>
   <div class="col-xs-12 col-md-8">
-    <div class="block">
-
-    </div>
+      <% if (@courses.present?) %>
+        <h3 class="margin-top-none">Courses created by <%= @user.full_name %></h3>
+        <table class="table block">
+          <thead>
+            <tr>
+              <th>Course Name</th>
+              <th class="text-center">Date Added</th>
+              <th class="text-center">Last Updated</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @courses.each do |c| %>
+            <tr>
+              <td><%= link_to c.name, course_path(c.id) %></td>
+              <td class="text-center"><%= c.created_at.strftime("%d/%m/%Y") %></td>
+              <td class="text-center"><%= "#{elapsed_time(c.updated_at)} ago" %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
+      <% if (@votes.present?) %>
+        <h3 class="margin-top-none">Courses voted by <%= @user.full_name %></h3>
+        <table class="table block">
+          <thead>
+            <tr>
+              <th>Course Name</th>
+              <th class="text-center">Vote</th>
+              <th class="text-center">Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @votes.each do |v| %>
+            <tr>
+              <td><%= link_to v.course.name, course_path(v.course.id) %></td>
+              <td class="text-center">
+                <% if (Upvote.exists?(user_id: @user.id, course_id: v.course.id)) %>
+                  <span class="glyphicon glyphicon-thumbs-up green" aria-hidden="true"></span>
+                <% elsif (Downvote.exists?(user_id: @user.id, course_id: v.course.id)) %>
+                  <span class="glyphicon glyphicon-thumbs-down red" aria-hidden="true"></span>
+                <% else %>
+                  -
+                <% end %>
+              </td>
+              <td class="text-center"><%= "#{elapsed_time(v.created_at)} ago" %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table>
+      <% end %>
   </div>
 </div>

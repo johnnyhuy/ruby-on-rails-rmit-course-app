@@ -13,6 +13,7 @@ gem 'carrierwave', '~> 1.0'
 gem "mini_magick"
 gem "font-awesome-rails"
 gem 'bcrypt', '~> 3.1.7'
+gem "fog-aws"
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
