@@ -5,8 +5,8 @@
 </div>
 <div class="row">
   <div class="col-xs-12 col-md-4">
-    <div class="block">
-      <% if (!logged_in?) %>
+    <div class="block margin-bottom-three">
+      <% if (logged_in?) %>
         <h3 class="margin-top-none">Categories</h3>
         <p>Find your courses through a collection of categories.</p>
         <%= link_to 'Browse Categories', categories_path, class: 'btn btn-primary' %>
@@ -18,8 +18,8 @@
     </div>
   </div>
   <div class="col-xs-12 col-md-4">
-    <div class="block">
-      <% if (!logged_in?) %>
+    <div class="block margin-bottom-three">
+      <% if (logged_in?) %>
         <h3 class="margin-top-none">Locations</h3>
         <p>Get all available locations of the campus here.</p>
         <%= link_to 'Browse Locations', locations_path, class: 'btn btn-primary' %>
@@ -31,7 +31,7 @@
     </div>
   </div>
   <div class="col-xs-12 col-md-4">
-    <div class="block">
+    <div class="block margin-bottom-three">
       <h3 class="margin-top-none">Courses</h3>
       <p>View a collection of courses within the application.</p>
       <%= link_to 'Browse Courses', courses_path, class: 'btn btn-primary' %>
