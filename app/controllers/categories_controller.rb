@@ -15,7 +15,7 @@ class CategoriesController < ApplicationController
     @category = Category.new(new_category)
 
     if @category.save
-      flash_success("Successfully created #{@category.name} category.", root_path)
+      flash_success("Successfully created #{@category.name} category.", categories_path)
     else
       render 'new'
     end
