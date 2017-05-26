@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id]).destroy
-    flash_success("Successfully deleted #{user.full_name} user!", users_path)
+    flash_success("Successfully deleted #{user.full_name} user!", :back)
   end
 
   def edit

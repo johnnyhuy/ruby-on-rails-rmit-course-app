@@ -24,7 +24,7 @@ class CategoriesController < ApplicationController
   def destroy
     # Delete course
     category = Category.find(params[:id]).destroy
-    flash_success("Successfully deleted #{category.name} category!", categories_path)
+    flash_success("Successfully deleted #{category.name} category!", :back)
   end
 
   def new

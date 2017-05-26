@@ -36,7 +36,7 @@ class CoursesController < ApplicationController
     # Delete all prereq
     Prerequisite.where(id: params[:id]).destroy_all
 
-    flash_success("Successfully deleted #{course.name} course!", courses_path)
+    flash_success("Successfully deleted #{course.name} course!", :back)
   end
 
   def edit
