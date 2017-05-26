@@ -8,7 +8,7 @@
         <% end %>
         <div class="caption">
           <h3 class="thumbnail__header"><%= link_to course.name, course_path(:id => course.id), class: 'thumbnail__link' %></h3>
-          <p class="bold">Updated: <%= elapsed_time(course.created_at) %> ago</p>
+          <p class="bold">Updated: <%= elapsed_time(course.updated_at) %> ago</p>
           <% if course.prerequisites.present? %>
             <p><strong>Prerequisites:</strong><br>
               <% names = [] %>
@@ -38,20 +38,26 @@
               <%= names.join(', ') %>
             </p>
           <% else %>
-            <p class="red bold"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No Locations</p>
+            <p class="red bold"><span class="glyphicon glyphicon-remove-sign" aria-hidden="true"></span> No Categories</p>
           <% end %>
           <div class="thumbnail__button-panel">
-            <div class="pull-left">
-              <%= link_to course_path(course.id), method: :delete, class: 'btn', title: "Remove #{course.name}" do %>
-                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-              <% end %>
-              <%= link_to edit_course_path(course.id), class: 'btn', title: "Edit #{course.name}" do %>
-                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-              <% end %>
-            </div>
+              <div class="pull-left">
+                <% if (is_admin?) %>
+                  <%= link_to course_path(course.id), method: :delete, class: 'btn', title: "Remove #{course.name}" do %>
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  <% end %>
+                <% end %>
+                <% if (logged_in?) %>
+                  <%= link_to edit_course_path(course.id), class: 'btn', title: "Edit #{course.name}" do %>
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                  <% end %>
+                <% end %>
+              </div>
             <div class="pull-right">
-              <%= link_to reset_votes_path(course.id), method: :delete, class: 'btn', title: "Reset Votes for #{course.name}" do %>
-                <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+              <% if (is_admin?) %>
+                <%= link_to reset_votes_path(course.id), method: :delete, class: 'btn', title: "Reset Votes for #{course.name}" do %>
+                  <span class="glyphicon glyphicon-repeat" aria-hidden="true"></span>
+                <% end %>
               <% end %>
               <%= link_to downvote_path(course.id), method: :post, class: 'btn', title: "Downvote #{course.name}" do %>
                 <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true"></span>  <%= Downvote.where(course_id: course.id).count %>

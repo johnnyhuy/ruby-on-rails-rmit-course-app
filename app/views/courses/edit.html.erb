@@ -15,20 +15,20 @@
     </div>
     <div class="form-group">
       <%= f.label :prerequisites %>
-      <%= f.select :prerequisites, options_from_collection_for_select(@courses, :id, :name), {}, {class: ['selectpicker', 'btn-dropdown'], data: {width: '100%'}, multiple: true} %>
+      <%= f.select :prerequisites, options_from_collection_for_select(@courses, :id, :name, @course.prerequisites.ids), {}, {class: ['selectpicker', 'btn-dropdown'], data: {width: '100%'}, multiple: true} %>
     </div>
     <div class="form-group">
       <%= f.label :locations %>
-      <%= f.select :locations, options_from_collection_for_select(@locations, :id, :name), {}, {class: 'selectpicker', data: {width: '100%'}, multiple: true} %>
+      <%= f.select :locations, options_from_collection_for_select(@locations, :id, :name, @course.locations.ids), {}, {class: 'selectpicker', data: {width: '100%'}, multiple: true} %>
     </div>
     <div class="form-group">
       <%= f.label :categories %>
-      <%= f.select :categories, options_from_collection_for_select(@categories, :id, :name), {}, {type: 'select', class: 'selectpicker', data: {width: '100%'}, multiple: true} %>
+      <%= f.select :categories, options_from_collection_for_select(@categories, :id, :name, @course.categories.ids), {}, {type: 'select', class: 'selectpicker', data: {width: '100%'}, multiple: true} %>
     </div>
     <div class="form-group">
       <%= f.label :image %>
       <div class="form-control btn btn-default btn-file">
-        <span class="glyphicon glyphicon-export" aria-hidden="true"></span> Select an image to upload
+        <span class="glyphicon glyphicon-export" aria-hidden="true"></span> <span class="caption">Select an image to upload</span>
         <%= f.file_field :image, hidden: true %>
       </div>
     </div>
