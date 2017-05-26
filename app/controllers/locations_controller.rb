@@ -8,7 +8,7 @@ class LocationsController < ApplicationController
     @location = Location.new(new_location)
 
     if @location.save
-      redirect_to root_path, flash: { success: "Successfully created location #{@location.name}!" }
+      flash_success("Successfully created #{@location.name} location!", locations_path)
     else
       render 'new'
     end
@@ -21,7 +21,7 @@ class LocationsController < ApplicationController
   def destroy
     # Delete course
     location = Location.find(params[:id]).destroy
-    flash_success("Successfully deleted #{location.name} location!", locations_path)
+    flash_success("Successfully deleted #{location.name} location!", :back)
   end
 
   def index

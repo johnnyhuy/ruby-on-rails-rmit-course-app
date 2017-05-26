@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def destroy
     user = User.find(params[:id]).destroy
-    flash_success("Successfully deleted #{user.full_name} user!", users_path)
+    flash_success("Successfully deleted #{user.full_name} user!", :back)
   end
 
   def edit
@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.where.not(email: 'admin')
   end
 
   def new
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     # Save user to DB
     if @user.save
       # Handle a successful save.
-      redirect_to login_path, flash: { success: 'Successfully registered a coordinator, please login.' }
+      flash_success('Successfully registered a coordinator, please login.', login_path)
     else
       render 'new'
     end
@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     @user.assign_attributes(user_params)
 
     if @user.save
-      redirect_to user_path(@user), flash: { success: 'Successfully updated profile!' }
+      flash_success("Successfully updated #{@user.full_name} profile!", user_path(@user))
     else
       render 'edit'
     end

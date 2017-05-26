@@ -6,24 +6,32 @@ module ApplicationHelper
     end
   end
 
+  def redirect_safe(url)
+    if url != :back
+      redirect_to url
+    else
+      redirect_back(fallback_location: root_path)
+    end
+  end
+
   def flash_success(message, redirect_url = nil)
     flash[:success] = message
-    redirect_to redirect_url if !redirect_url.nil?
+    redirect_safe(redirect_url) if !redirect_url.nil?
   end
 
   def flash_danger(message, redirect_url = nil)
     flash[:danger] = message
-    redirect_to redirect_url if !redirect_url.nil?
+    redirect_safe(redirect_url) if !redirect_url.nil?
   end
 
   def flash_warning(message, redirect_url = nil)
     flash[:warning] = message
-    redirect_to redirect_url if !redirect_url.nil?
+    redirect_safe(redirect_url) if !redirect_url.nil?
   end
 
   def flash_info(message, redirect_url = nil)
     flash[:info] = message
-    redirect_to redirect_url if !redirect_url.nil?
+    redirect_safe(redirect_url) if !redirect_url.nil?
   end
 
   def elapsed_time(time_input)

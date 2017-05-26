@@ -15,7 +15,18 @@ class SessionsController < ApplicationController
     user = User.find_by(email: email.downcase)
 
     # If user wants to login as admin
-    return redirect_to root_path if login_admin(email, password)
+    if email == 'admin'
+      if login_admin(email, password)
+        # Return to skip the process below
+        return flash_success('Successfully logged in as an administrator.', root_path)
+      else
+        # Mimic the same error as a normal login attempt
+        flash_danger('Invalid password/email, please try again.')
+
+        # Return to skip the process below
+        return render 'new'
+      end
+    end
 
     if user and user.authenticate(password)
       # Check if remember me param is true
@@ -38,7 +49,7 @@ class SessionsController < ApplicationController
   def destroy
     if logged_in?
       logout
-      redirect_to root_path, flash: { success: 'Successfully logged out.' }
+      flash_success('Successfully logged out.', root_path)
     end
   end
 end

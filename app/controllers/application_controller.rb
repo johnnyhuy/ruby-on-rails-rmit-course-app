@@ -8,18 +8,18 @@ class ApplicationController < ActionController::Base
 
   def populate
     # Location
-    @locations = Location.all
+    @locations = Location.all.order(:name)
     @location = Location.new
 
     # Cateogry
-    @categories = Category.all
+    @categories = Category.all.order(:name)
     @category = Category.new
 
     # Course
-    @courses = Course.all
+    @courses = Course.all.order(:name)
     @course = Course.new
 
     # Prereq
-    @prerequisites = Prerequisite.all
+    @prerequisites = Prerequisite.all.order(:name)
   end
 end
