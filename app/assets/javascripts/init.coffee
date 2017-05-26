@@ -9,5 +9,10 @@ App.init = ->
 
   $('#location').mask("999.99.999")
 
+  $("input[type=file]").change ->
+    arr = this.value.split('\\')
+    file = arr[2]
+    $('.btn-file .caption').text(file)
+
 $(document).on "turbolinks:load", ->
   App.init()

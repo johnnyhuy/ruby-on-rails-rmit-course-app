@@ -156,7 +156,14 @@ a:hover, a:focus {
     text-align: left;
     font-family: $font-family-second;
     color: $gray-light;
-    padding-top: 8px;
+
+    .glyphicon {
+        margin-top: 2px;
+    }
+
+    .caption {
+        padding-left: 4px;
+    }
 
     input[type=file] {
         cursor: inherit;
@@ -330,6 +337,12 @@ a:hover, a:focus {
 
     .navbar > .container .navbar-brand, .navbar > .container-fluid .navbar-brand {
         margin-left: 0;
+    }
+
+    .jumbotron {
+        h1 .h1 {
+            font-size: 48px;
+        }
     }
 }
 
