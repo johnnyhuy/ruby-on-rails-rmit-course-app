@@ -18,7 +18,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    @users = User.all
+    @users = User.where.not(email: 'admin')
   end
 
   def new
