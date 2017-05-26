@@ -5,8 +5,12 @@ Major group assignment for COSC2675 Rapid Application Development at RMIT Univer
 * **Neil D'Souza** - S3600251
 
 # Heroku Development
-
 Application URL: https://rad-assignment-two.herokuapp.com/
+
+# Additional Gems
+We have strictly followed the Gemfile provided from blackboard. However, upon adding AWS support to images, I needed the 'fog' gem to upload images to AWS.
+
+`gem "fog"`
 
 # Practical Class
 **2.30 pm - 4.30 pm** - 056.04.082
