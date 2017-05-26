@@ -14,8 +14,4 @@ class Location < ApplicationRecord
     uniqueness: {
       case_sensitive: false
     }
-
-  def duplicate?
-      Location.where(name: self.name).count > 0
-  end
 end
