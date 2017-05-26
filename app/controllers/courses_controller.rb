@@ -41,7 +41,7 @@ class CoursesController < ApplicationController
 
   def edit
     @course = Course.find(params[:id])
-    @courses = Course.where.not(id: params[:id])
+    @courses = Course.where.not(id: params[:id]).order(:name)
   end
 
   def index
