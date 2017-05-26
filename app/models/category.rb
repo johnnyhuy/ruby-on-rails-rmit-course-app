@@ -17,11 +17,6 @@ class Category < ApplicationRecord
     case_sensitive: false
   }
 
-  # return if there is 1 record whose name equals this instances name
-  def duplicate?
-      Category.where(name: self.name).count > 0
-  end
-
   def case_format
       self.name = self.name.split.map(&:capitalize).join(' ')
   end

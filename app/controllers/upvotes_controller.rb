@@ -8,14 +8,14 @@ class UpvotesController < ApplicationController
 
     # If upvote exists
     if Upvote.exists?(condition)
-      flash_danger("You have already voted for #{course.name} course.", courses_path)
+      flash_danger("You have already voted for #{course.name} course.", :back)
     elsif Downvote.exists?(condition)
       # Cannot allow course to be both upvote and downvote
-      redirect_to courses_path, flash: { danger: "You have already downvoted #{course.name} course." }
+      flash_danger("You have already downvoted #{course.name} course.", :back)
     else
       # Add upvote to DB
       course.upvotes << Upvote.create(user_id: current_user.id, course_id: course.id)
-      redirect_to courses_path, flash: { success: "Successfully upvoted #{course.name} course." }
+      flash_success("Successfully upvoted #{course.name} course.", :back)
     end
   end
 end
