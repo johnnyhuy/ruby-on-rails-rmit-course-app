@@ -57,7 +57,7 @@ class UsersController < ApplicationController
     @user.assign_attributes(user_params)
 
     if @user.save
-      redirect_to user_path(@user), flash: { success: 'Successfully updated profile!' }
+      flash_success("Successfully updated #{@user.full_name} profile!", user_path(@user))
     else
       render 'edit'
     end
