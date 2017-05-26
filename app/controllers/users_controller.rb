@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     # Save user to DB
     if @user.save
       # Handle a successful save.
-      redirect_to login_path, flash: { success: 'Successfully registered a coordinator, please login.' }
+      flash_success('Successfully registered a coordinator, please login.', login_path)
     else
       render 'new'
     end
