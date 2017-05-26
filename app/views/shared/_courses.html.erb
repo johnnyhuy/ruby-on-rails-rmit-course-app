@@ -3,9 +3,7 @@
     <% group.each do |course| %>
     <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
-        <% if course.image.present? %>
-          <%= image_tag course.image, class: 'thumbnail__image' %>
-        <% end %>
+        <%= image_tag course.image, class: 'thumbnail__image' %>
         <div class="caption">
           <h3 class="thumbnail__header"><%= link_to course.name, course_path(:id => course.id), class: 'thumbnail__link' %></h3>
           <p class="bold">Updated: <%= elapsed_time(course.updated_at) %> ago</p>
