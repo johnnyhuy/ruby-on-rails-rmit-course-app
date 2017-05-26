@@ -9,8 +9,9 @@ module SessionsHelper
   def login_admin(email, password)
     if email == 'admin' && password == 'password'
       session[:admin] = true
-      flash_success('Successfully logged in as an administrator.')
       return true
+    else
+      return false
     end
   end
 
