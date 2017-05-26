@@ -21,7 +21,7 @@ class LocationsController < ApplicationController
   def destroy
     # Delete course
     location = Location.find(params[:id]).destroy
-    flash_success("Successfully deleted #{location.name} location!", locations_path)
+    flash_success("Successfully deleted #{location.name} location!", :back)
   end
 
   def index
