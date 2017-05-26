@@ -10,7 +10,9 @@
         <th>Email</th>
         <th class="text-center">Date Added</th>
         <th class="text-center">Last Updated</th>
-        <th class="text-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></th>
+        <% if (logged_in?) %>
+          <th class="text-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -33,18 +35,24 @@
         </td>
         <td class="table__text text-center"><%= u.created_at.strftime("%d/%m/%Y") %></td>
         <td class="table__text text-center"><%= elapsed_time(u.updated_at) %> ago</td>
-        <td class="text-right">
-          <%= link_to edit_user_path(u.id), title: "Edit #{u.full_name}" do %>
-            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-          <% end %>
-          <%= link_to user_path(u.id), method: :delete, title: "Delete #{u.full_name}" do %>
-            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-          <% end %>
-        </td>
+        <% if (logged_in?) %>
+          <td class="text-right">
+            <% if (current_user.id == u.id || is_admin?) %>
+              <%= link_to edit_user_path(u.id), title: "Edit #{u.full_name}" do %>
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+            <% if (is_admin?) %>
+              <%= link_to user_path(u.id), method: :delete, title: "Delete #{u.full_name}" do %>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
       <% end %>
     </tbody>
   </table>
 <% else %>
-  <%= render 'shared/error_page', heading: 'Coordinator Not Found', message: 'Cannot find any coordinators within the application. Please register as a coordinator.' %>
+  <%= render 'shared/error_page', heading: 'Coordinators Not Found', message: 'Cannot find any coordinators within the application. Please register as a coordinator.' %>
 <% end %>
