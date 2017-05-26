@@ -10,7 +10,9 @@
         <th>Latest Course</th>
         <th class="text-center">Date Added</th>
         <th class="text-center">Last Updated</th>
-        <th class="text-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></th>
+        <% if (logged_in?) %>
+          <th class="text-right"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span></th>
+        <% end %>
       </tr>
     </thead>
     <tbody>
@@ -28,14 +30,18 @@
         </td>
         <td class="text-center"><%= c.created_at.strftime("%d/%m/%Y") %></td>
         <td class="text-center"><%= "#{elapsed_time(c.updated_at)} ago" %></td>
-        <td class="text-right">
-          <%= link_to edit_category_path(c.id), title: "Edit #{c.name}" do %>
-            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-          <% end %>
-          <%= link_to category_path(c.id), method: :delete, title: "Delete #{c.name}" do %>
-            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-          <% end %>
-        </td>
+        <% if (logged_in?) %>
+          <td class="text-right">
+              <%= link_to edit_category_path(c.id), title: "Edit #{c.name}" do %>
+                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+            <% end %>
+            <% if (is_admin?) %>
+              <%= link_to category_path(c.id), method: :delete, title: "Delete #{c.name}" do %>
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+              <% end %>
+            <% end %>
+          </td>
+        <% end %>
       </tr>
       <% end %>
     </tbody>
