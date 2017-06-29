@@ -10,9 +10,9 @@ CarrierWave.configure do |config|
 
     # Configuration for Amazon S3
     :provider              => 'AWS',
-    :aws_access_key_id     => 'AKIAJRQN26AIFBNLQL2Q',
-    :aws_secret_access_key => '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',
-    :region                => 'ap-southeast-2'
+    :aws_access_key_id     => '',
+    :aws_secret_access_key => '',
+    :region                => ''
   }
 
   # For testing, upload files to local `tmp` folder.
