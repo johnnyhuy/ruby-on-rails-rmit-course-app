@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 gem 'rails',        '~> 5.0.1'
-gem 'bootstrap-sass', '3.3.6'
+gem "bootstrap-sass", ">= 3.4.1"
 gem 'puma',         '3.4.0'
 gem 'sass-rails',   '5.0.6'
 gem 'uglifier',     '3.0.0'
@@ -10,10 +10,16 @@ gem 'jquery-rails', '4.1.1'
 gem 'turbolinks',   '5.0.1'
 gem 'jbuilder',     '2.4.1'
 gem 'carrierwave', '~> 1.0'
-gem "mini_magick"
+gem "mini_magick", ">= 4.9.4"
 gem "font-awesome-rails"
 gem 'bcrypt', '~> 3.1.7'
 gem "fog"
+gem "rack", ">= 2.0.6"
+gem "actionview", ">= 5.0.7.2"
+gem "nokogiri", ">= 1.10.4"
+gem "activejob", ">= 5.0.7.1"
+gem "rails-html-sanitizer", ">= 1.0.4"
+gem "loofah", ">= 2.2.3"
 
 group :development, :test do
   gem 'sqlite3', '1.3.12'
