@@ -1,24 +1,40 @@
 # Rapid Application Development Assignment Two
+
 Major group assignment for COSC2675 Rapid Application Development at RMIT University.
 
 * **Johnny Huynh** - S3604367
 * **Neil D'Souza** - S3600251
 
-# Heroku Development
+## Heroku Development
+
 Application URL: https://rad-assignment-two.herokuapp.com/
 
-# Additional Gems
+## Development
+
+You should have Ruby v2 installed on your system,
+
+Run the following commands at the project directory to install the Ruby gems.
+
+```bash
+bundle install
+```
+
+## Additional Gems
+
 We have strictly followed the Gemfile provided from blackboard. However, upon adding AWS support to images, I needed the 'fog' gem to upload images to AWS.
 
 `gem "fog"`
 
-# Practical Class
+## Practical Class
+
 **2.30 pm - 4.30 pm** - 056.04.082
 
-# Development Environment
+## Development Environment
+
 To allow actual development on the project code. You must require a development environment for Ruby on Rails (Ruby Framework) to function properly on your local device.
 
-# Last Deployment Log
+## Last Deployment Log
+
 -----> Ruby app detected
 -----> Compiling Ruby/Rails
 -----> Using Ruby version: ruby-2.3.4
