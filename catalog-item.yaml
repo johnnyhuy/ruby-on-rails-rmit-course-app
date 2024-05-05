@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ruby-on-rails-rmit-course-app
+  title: Ruby on Rails RMIT Course App
+  description: RMIT course project implementing a Ruby on Rails web application
+  tags:
+    - ruby
+spec:
+  type: website
+  lifecycle: experimental
+  owner: johnnyhuy
